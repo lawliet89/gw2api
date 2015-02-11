@@ -1,8 +1,18 @@
-﻿<Window x:Class="PromotionViabilityWpf.MainWindow"
+﻿<Controls:MetroWindow  x:Class="PromotionViabilityWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525" Icon="icon.ico">
-    <Grid>
-        
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        Title="Guild Wars 2 Promotion Viability Tool" Height="720" Width="1280" Icon="icon.ico" 
+        ResizeMode="CanResizeWithGrip"
+        EnableDWMDropShadow="True"               
+        BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
+        BorderThickness="1" WindowStyle="ThreeDBorderWindow" NonActiveBorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}">
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="refresh" Cursor="Hand" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+        <Grid>
+        <Controls:MetroProgressBar IsIndeterminate="True" Margin="0" VerticalAlignment="Top" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
     </Grid>
-</Window>
+</Controls:MetroWindow>
