@@ -6,7 +6,9 @@
         ResizeMode="CanResizeWithGrip"
         EnableDWMDropShadow="True"               
         BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"
-        BorderThickness="1" WindowStyle="ThreeDBorderWindow" NonActiveBorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}">
+        BorderThickness="1" WindowStyle="ThreeDBorderWindow" 
+        NonActiveBorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}"
+        GlowBrush="{DynamicResource AccentColorBrush}">
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="refresh" Cursor="Hand" />
