@@ -4,7 +4,18 @@
     {
         public int Upper { get; set; }
         public int Lower { get; set; }
-        public int? Average { get; set; } // Can be unknown, then it's null
+        private int? _average;
+
+        public int Average
+        {
+            get { return _average ?? CalculateAverage(); }
+            set { _average = value; }
+        } // Can be unknown, then it's null
+
+        public int CalculateAverage()
+        {
+            return (Upper + Lower)/2;
+        }
 
         // Some useful data, sourced from GW2 Wiki
         public static Yield FineMaterialsPromotionYielld = new Yield()

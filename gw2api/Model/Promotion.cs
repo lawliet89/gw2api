@@ -15,7 +15,7 @@ namespace gw2api.Model
         public static int Tier5PromotionYield = 5;
 
         public ItemBundledEntity Promoted;
-        public int QuantityYield;
+        public Yield QuantityYield;
         public Dictionary<ItemBundledEntity, int> Ingredients;
 
         public Coin CostOfIngridients
@@ -27,19 +27,19 @@ namespace gw2api.Model
             }
         }
 
-        public Coin ProfitOfProduct
+        public Coin AverageProfitOfProduct
         {
             get
             {
-                return Coin.ProfitSellingAt(Promoted.MinSaleUnitPrice * QuantityYield);
+                return Coin.ProfitSellingAt(Promoted.MinSaleUnitPrice * QuantityYield.Average);
             }
         }
 
-        public Coin ProfitOfPromotion
+        public Coin AverageProfitOfPromotion
         {
             get
             {
-                return ProfitOfProduct - CostOfIngridients;
+                return AverageProfitOfProduct - CostOfIngridients;
             }
         }
 
@@ -47,7 +47,7 @@ namespace gw2api.Model
         {
             get
             {
-                return ProfitOfPromotion > 0;
+                return AverageProfitOfPromotion > 0;
             }
         }
 
