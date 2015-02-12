@@ -52,7 +52,7 @@
     <Compile Include="Extension\ItemExtensions.cs" />
     <Compile Include="Extension\MiscExtensions.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
-    <Compile Include="Object\Currency.cs" />
+    <Compile Include="Object\Coin.cs" />
     <Compile Include="Object\ItemWrapper.cs" />
     <Compile Include="Object\Wrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

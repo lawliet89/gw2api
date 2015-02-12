@@ -8,7 +8,7 @@ using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
 
-namespace PromotionViability
+namespace PromotionViabilityWpf.Model
 {
     class Promotion : IBundlelable<int, Item>, IBundlelable<int, AggregateListing>
     {

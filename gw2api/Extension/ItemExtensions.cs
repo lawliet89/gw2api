@@ -6,7 +6,7 @@ namespace gw2api.Extension
 {
     public static class ItemExtensions
     {
-        public static Currency MaxOfferUnitPrice(this Item item)
+        public static Coin MaxOfferUnitPrice(this Item item)
         {
             var commerceService = GW2.V2.Commerce.Prices;
             return commerceService.Find(item.ItemId)

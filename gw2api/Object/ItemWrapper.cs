@@ -9,7 +9,7 @@ namespace gw2api.Object
             
         }
 
-        public Currency MaxOfferUnitPrice { get; set; }
-        public Currency MinSaleUnitPrice { get; set; }
+        public Coin MaxOfferUnitPrice { get; set; }
+        public Coin MinSaleUnitPrice { get; set; }
     }
 }

@@ -3,12 +3,12 @@ using System.Text;
 
 namespace gw2api.Object
 {
-    public class Currency
+    public class Coin
     {
         public static double SalesTax = 0.15;
         public int Raw { get; private set; }
 
-        public Currency(int raw)
+        public Coin(int raw)
         {
             Raw = raw;
         }
@@ -59,47 +59,47 @@ namespace gw2api.Object
             return sb.ToString();
         }
 
-        public static implicit operator int(Currency obj)
+        public static implicit operator int(Coin obj)
         {
             return obj.Raw;
         }
 
-        public static implicit operator Currency(int raw)
+        public static implicit operator Coin(int raw)
         {
-            return new Currency(raw);
+            return new Coin(raw);
         }
 
-        public static Currency operator +(Currency a, Currency b)
+        public static Coin operator +(Coin a, Coin b)
         {
-            return new Currency(a.Raw + b.Raw);
+            return new Coin(a.Raw + b.Raw);
         }
 
-        public static Currency operator -(Currency a, Currency b)
+        public static Coin operator -(Coin a, Coin b)
         {
-            return new Currency(a.Raw - b.Raw);
+            return new Coin(a.Raw - b.Raw);
         }
 
-        public static Currency operator *(Currency a, double b)
+        public static Coin operator *(Coin a, double b)
         {
-            return new Currency((int) (a.Raw*b));
+            return new Coin((int) (a.Raw*b));
         }
 
-        public static Currency operator /(Currency a, double b)
+        public static Coin operator /(Coin a, double b)
         {
-            return new Currency((int) (a.Raw/b));
+            return new Coin((int) (a.Raw/b));
         }
 
-        public static bool operator <(Currency a, Currency b)
+        public static bool operator <(Coin a, Coin b)
         {
             return a.Raw < b.Raw;
         }
 
-        public static bool operator >(Currency a, Currency b)
+        public static bool operator >(Coin a, Coin b)
         {
             return a.Raw > b.Raw;
         }
 
-        public static Currency ProfitSellingAt(Currency price)
+        public static Coin ProfitSellingAt(Coin price)
         {
             return price*(1.0 - SalesTax);
         }
@@ -107,9 +107,9 @@ namespace gw2api.Object
 
     public static class CurrencyExtensions
     {
-        public static Currency AsCurrency(this int raw)
+        public static Coin AsCurrency(this int raw)
         {
-            return new Currency(raw);
+            return new Coin(raw);
         }
     }
 }
