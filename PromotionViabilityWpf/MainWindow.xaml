@@ -27,7 +27,7 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Grid>
-        <Controls:MetroProgressBar IsIndeterminate="True" Margin="0" VerticalAlignment="Top"
+        <Controls:MetroProgressBar x:Name="LoadingIndicator" IsIndeterminate="True" Margin="0" VerticalAlignment="Top"
                                    Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
     </Grid>
 </Controls:MetroWindow>
