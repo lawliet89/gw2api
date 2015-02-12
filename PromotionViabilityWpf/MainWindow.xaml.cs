@@ -1,5 +1,6 @@
 ﻿using GW2NET.Commerce;
 using GW2NET.Items;
+using PromotionViabilityWpf.Data;
 using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 
