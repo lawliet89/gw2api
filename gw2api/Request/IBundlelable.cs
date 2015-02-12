@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using gw2api.Object;
 using GW2NET.Common;
 
 namespace gw2api.Request
@@ -11,8 +12,7 @@ namespace gw2api.Request
     /// </summary>
     public interface IBundlelable<TKey, TValue>
     {
-        IEnumerable<TKey> GetKeys(Type valueType);
-        void SetValue(TKey key, TValue value);
-        IRepository<TKey, TValue> GetService();
+        IEnumerable<IBundledEntity<TKey, TValue>> Entities { get; }
+        IRepository<TKey, TValue> Service { get; }
     }
 }

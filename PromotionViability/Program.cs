@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
+using gw2api.Model;
 using gw2api.Object;
 using gw2api.Request;
-using GW2NET;
 using GW2NET.Commerce;
 using GW2NET.Items;
 
@@ -18,96 +17,96 @@ namespace PromotionViability
             // Dust
             new Promotion
             {
-                Promoted = new ItemWrapper(ItemIds.CrystallineDust),
+                Promoted = new ItemBundledEntity(ItemIds.CrystallineDust),
                 QuantityYield = 23,
-                Ingredients = new Dictionary<ItemWrapper, int>
+                Ingredients = new Dictionary<ItemBundledEntity, int>
                 {
-                    {new ItemWrapper(ItemIds.IncandescentDust), 250},
-                    {new ItemWrapper(ItemIds.CrystallineDust), 1}
+                    {new ItemBundledEntity(ItemIds.IncandescentDust), 250},
+                    {new ItemBundledEntity(ItemIds.CrystallineDust), 1}
                 }
             },
             // Ancient bone
             new Promotion
             {
-                Promoted = new ItemWrapper(ItemIds.AncientBone),
+                Promoted = new ItemBundledEntity(ItemIds.AncientBone),
                 QuantityYield = Promotion.Tier5PromotionYield,
-                Ingredients = new Dictionary<ItemWrapper, int>
+                Ingredients = new Dictionary<ItemBundledEntity, int>
                 {
-                    {new ItemWrapper(ItemIds.AncientBone), 1},
-                    {new ItemWrapper(ItemIds.LargeBone), 50},
-                    {new ItemWrapper(ItemIds.CrystallineDust), 5}
+                    {new ItemBundledEntity(ItemIds.AncientBone), 1},
+                    {new ItemBundledEntity(ItemIds.LargeBone), 50},
+                    {new ItemBundledEntity(ItemIds.CrystallineDust), 5}
                 }
             },
             // Claws
             new Promotion
             {
-                Promoted = new ItemWrapper(ItemIds.ViciousClaw),
+                Promoted = new ItemBundledEntity(ItemIds.ViciousClaw),
                 QuantityYield = Promotion.Tier5PromotionYield,
-                Ingredients = new Dictionary<ItemWrapper, int>
+                Ingredients = new Dictionary<ItemBundledEntity, int>
                 {
-                    {new ItemWrapper(ItemIds.ViciousClaw), 1},
-                    {new ItemWrapper(ItemIds.LargeClaws), 50},
-                    {new ItemWrapper(ItemIds.CrystallineDust), 5}
+                    {new ItemBundledEntity(ItemIds.ViciousClaw), 1},
+                    {new ItemBundledEntity(ItemIds.LargeClaws), 50},
+                    {new ItemBundledEntity(ItemIds.CrystallineDust), 5}
                 }
             },
             // Fangs
             new Promotion
             {
-                Promoted = new ItemWrapper(ItemIds.ViciousFang),
+                Promoted = new ItemBundledEntity(ItemIds.ViciousFang),
                 QuantityYield = Promotion.Tier5PromotionYield,
-                Ingredients = new Dictionary<ItemWrapper, int>
+                Ingredients = new Dictionary<ItemBundledEntity, int>
                 {
-                    {new ItemWrapper(ItemIds.ViciousFang), 1},
-                    {new ItemWrapper(ItemIds.LargeFang), 50},
-                    {new ItemWrapper(ItemIds.CrystallineDust), 5}
+                    {new ItemBundledEntity(ItemIds.ViciousFang), 1},
+                    {new ItemBundledEntity(ItemIds.LargeFang), 50},
+                    {new ItemBundledEntity(ItemIds.CrystallineDust), 5}
                 }
             },
             // Scales
             new Promotion
             {
-                Promoted = new ItemWrapper(ItemIds.ArmoredScale),
+                Promoted = new ItemBundledEntity(ItemIds.ArmoredScale),
                 QuantityYield = Promotion.Tier5PromotionYield,
-                Ingredients = new Dictionary<ItemWrapper, int>
+                Ingredients = new Dictionary<ItemBundledEntity, int>
                 {
-                    {new ItemWrapper(ItemIds.ArmoredScale), 1},
-                    {new ItemWrapper(ItemIds.LargeScale), 50},
-                    {new ItemWrapper(ItemIds.CrystallineDust), 5}
+                    {new ItemBundledEntity(ItemIds.ArmoredScale), 1},
+                    {new ItemBundledEntity(ItemIds.LargeScale), 50},
+                    {new ItemBundledEntity(ItemIds.CrystallineDust), 5}
                 }
             },
             // Totems
             new Promotion
             {
-                Promoted = new ItemWrapper(ItemIds.ElaborateTotem),
+                Promoted = new ItemBundledEntity(ItemIds.ElaborateTotem),
                 QuantityYield = Promotion.Tier5PromotionYield,
-                Ingredients = new Dictionary<ItemWrapper, int>
+                Ingredients = new Dictionary<ItemBundledEntity, int>
                 {
-                    {new ItemWrapper(ItemIds.ElaborateTotem), 1},
-                    {new ItemWrapper(ItemIds.IntricateTotem), 50},
-                    {new ItemWrapper(ItemIds.CrystallineDust), 5}
+                    {new ItemBundledEntity(ItemIds.ElaborateTotem), 1},
+                    {new ItemBundledEntity(ItemIds.IntricateTotem), 50},
+                    {new ItemBundledEntity(ItemIds.CrystallineDust), 5}
                 }
             },
             // Venom sacs
             new Promotion
             {
-                Promoted = new ItemWrapper(ItemIds.PowerfulVenomSac),
+                Promoted = new ItemBundledEntity(ItemIds.PowerfulVenomSac),
                 QuantityYield = Promotion.Tier5PromotionYield,
-                Ingredients = new Dictionary<ItemWrapper, int>
+                Ingredients = new Dictionary<ItemBundledEntity, int>
                 {
-                    {new ItemWrapper(ItemIds.PowerfulVenomSac), 1},
-                    {new ItemWrapper(ItemIds.PotentVenomSac), 50},
-                    {new ItemWrapper(ItemIds.CrystallineDust), 5}
+                    {new ItemBundledEntity(ItemIds.PowerfulVenomSac), 1},
+                    {new ItemBundledEntity(ItemIds.PotentVenomSac), 50},
+                    {new ItemBundledEntity(ItemIds.CrystallineDust), 5}
                 }
             },
             // Blood
             new Promotion
             {
-                Promoted = new ItemWrapper(ItemIds.PowerfulBlood),
+                Promoted = new ItemBundledEntity(ItemIds.PowerfulBlood),
                 QuantityYield = Promotion.Tier5PromotionYield,
-                Ingredients = new Dictionary<ItemWrapper, int>
+                Ingredients = new Dictionary<ItemBundledEntity, int>
                 {
-                    {new ItemWrapper(ItemIds.PowerfulBlood), 1},
-                    {new ItemWrapper(ItemIds.PotentBlood), 50},
-                    {new ItemWrapper(ItemIds.CrystallineDust), 5}
+                    {new ItemBundledEntity(ItemIds.PowerfulBlood), 1},
+                    {new ItemBundledEntity(ItemIds.PotentBlood), 50},
+                    {new ItemBundledEntity(ItemIds.CrystallineDust), 5}
                 }
             }
         };
