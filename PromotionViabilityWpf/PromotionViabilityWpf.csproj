@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>PromotionViabilityWpf.EntryPoint</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GW2NET">
       <HintPath>..\packages\GW2.NET.0.9.12.1\lib\net40\GW2NET.dll</HintPath>
@@ -72,6 +75,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\Loader.cs" />
+    <Compile Include="ViewModel\Promotions.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,6 +85,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Data\ItemIds.cs" />
+    <Compile Include="EntryPoint.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -127,9 +134,7 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\gw2api\gw2api.csproj">
       <Project>{F18DCF35-E1C8-4806-9640-1A58071AC52B}</Project>
