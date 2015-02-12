@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using gw2api.Model;
 using gw2api.Object;
-using PromotionViabilityWpf.Data;
 
-namespace PromotionViabilityWpf.ViewModel
+namespace PromotionViabilityWpf.Data
 {
     class Promotions
     {
