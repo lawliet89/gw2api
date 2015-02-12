@@ -1,4 +1,7 @@
-﻿namespace gw2api.Object
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace gw2api.Object
 {
     public class Yield
     {
@@ -16,6 +19,11 @@
         {
             return (Upper + Lower)/2;
         }
+
+        public IEnumerable<int> Range
+        {
+            get { return Enumerable.Range(Lower, Upper); }
+        } 
 
         // Some useful data, sourced from GW2 Wiki
         public static Yield FineMaterialsPromotionYielld = new Yield()

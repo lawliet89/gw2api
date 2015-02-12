@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using gw2api.Extension;
 using gw2api.Object;
 using gw2api.Request;
 using GW2NET;
@@ -12,11 +13,9 @@ namespace gw2api.Model
 {
     public class Promotion : IBundlelable<int, Item>, IBundlelable<int, AggregateListing>
     {
-        public static int Tier5PromotionYield = 5;
-
-        public ItemBundledEntity Promoted;
-        public Yield QuantityYield;
-        public Dictionary<ItemBundledEntity, int> Ingredients;
+        public ItemBundledEntity Promoted { get; set; }
+        public Yield QuantityYield { get; set; }
+        public Dictionary<ItemBundledEntity, int> Ingredients { get; set; }
 
         public Coin CostOfIngridients
         {
@@ -43,12 +42,40 @@ namespace gw2api.Model
             }
         }
 
-        public bool Profitable
+        public bool AverageProfitable
         {
             get
             {
                 return AverageProfitOfPromotion > 0;
             }
+        }
+
+        public Coin ProfitOfProduct(int quantityYielded)
+        {
+            if (quantityYielded > QuantityYield.Upper || quantityYielded < QuantityYield.Lower)
+                throw new ArgumentException("Quantity yield provided is outside the range of possible yield");
+
+            return Coin.ProfitSellingAt(Promoted.MinSaleUnitPrice * quantityYielded);
+        }
+
+        /// <summary>
+        /// Calculates the remaining cost of ingredients based on how many you have
+        /// </summary>
+        /// <returns></returns>
+        public Coin CostOfIngredients(IDictionary<ItemBundledEntity, int> ingredients)
+        {
+            var totalCost = new Coin(0);
+            foreach (var ingredient in Ingredients)
+            {
+                var quantity = ingredient.Value;
+                var availableIngredient = ingredients.FirstOrDefault(i => i.Key.Identifier == ingredient.Key.Identifier);
+                if (!availableIngredient.IsDefault())
+                {
+                    quantity = Math.Max(0, quantity - ingredient.Value);
+                }
+                totalCost += quantity*ingredient.Key.MaxOfferUnitPrice;
+            }
+            return totalCost;
         }
 
         public string Name
