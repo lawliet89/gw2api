@@ -9,11 +9,11 @@ namespace PromotionViabilityWpf.ViewModel
 {
     public class PromotionViewModel : ReactiveObject
     {
-        private readonly Promotion promotion;
+        public Promotion Promotion { get; private set; }
 
         public PromotionViewModel(Promotion promotion)
         {
-            this.promotion = promotion;
+            this.Promotion = promotion;
 
             QuantityYield = promotion.QuantityYield.Average;
             IngredientsQuantity =
@@ -34,7 +34,7 @@ namespace PromotionViabilityWpf.ViewModel
 
         public string Name
         {
-            get { return promotion.Name; }
+            get { return Promotion.Name; }
         }
 
         private int quantityYield;
