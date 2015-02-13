@@ -18,9 +18,6 @@ namespace PromotionViabilityWpf
             InitializeComponent();
 
             MainWindowViewModel = new MainWindowViewModel();
-            MainWindowViewModel.Load<int, Item>(Promotions.FineMaterialsTier6Promotions);
-            MainWindowViewModel.Load<int, AggregateListing>(Promotions.FineMaterialsTier6Promotions);
-
             this.OneWayBind(ViewModel, x => x.IsLoading, x => x.LoadingIndicator.Visibility);
         }
 

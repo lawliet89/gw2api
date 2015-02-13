@@ -98,6 +98,7 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Data\Promotions.cs" />
+    <Compile Include="ViewModel\PromotionViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

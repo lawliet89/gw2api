@@ -62,13 +62,13 @@ namespace gw2api.Model
         /// Calculates the remaining cost of ingredients based on how many you have
         /// </summary>
         /// <returns></returns>
-        public Coin CostOfIngredients(IDictionary<ItemBundledEntity, int> ingredients)
+        public Coin CostOfIngredients(IDictionary<int, int> ingredients)
         {
             var totalCost = new Coin(0);
             foreach (var ingredient in Ingredients)
             {
                 var quantity = ingredient.Value;
-                var availableIngredient = ingredients.FirstOrDefault(i => i.Key.Identifier == ingredient.Key.Identifier);
+                var availableIngredient = ingredients.FirstOrDefault(i => i.Key == ingredient.Key.Identifier);
                 if (!availableIngredient.IsDefault())
                 {
                     quantity = Math.Max(0, quantity - ingredient.Value);
@@ -76,6 +76,11 @@ namespace gw2api.Model
                 totalCost += quantity*ingredient.Key.MaxOfferUnitPrice;
             }
             return totalCost;
+        }
+
+        public Coin CostOfIngredients(IDictionary<ItemBundledEntity, int> ingredients)
+        {
+            return CostOfIngredients(ingredients.ToDictionary(pair => pair.Key.Identifier, pair => pair.Value));
         }
 
         public string Name
