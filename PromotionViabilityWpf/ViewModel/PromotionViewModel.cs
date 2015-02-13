@@ -13,7 +13,7 @@ namespace PromotionViabilityWpf.ViewModel
 
         public PromotionViewModel(Promotion promotion)
         {
-            this.Promotion = promotion;
+            Promotion = promotion;
 
             QuantityYield = promotion.QuantityYield.Average;
             IngredientsQuantity =
@@ -22,14 +22,21 @@ namespace PromotionViabilityWpf.ViewModel
                 {
                     ChangeTrackingEnabled = true
                 };
-            IngredientsQuantity.ItemChanged
-                .Select(_ => promotion
-                    .CostOfIngredients(IngredientsQuantity.ToDictionary(pair => pair.Key, pair => pair.Value)))
-                .ToProperty(this, x => x.Cost, out cost);
-
-            this.WhenAnyValue(x => x.QuantityYield)
-                .Select(promotion.ProfitOfProduct)
-                .ToProperty(this, x => x.Profit, out profit);
+            this.WhenAnyValue(x => x.Promotion)
+                .Select(p => p.Populated)
+                .Where(p => p)
+                .Do(loaded =>
+                {
+                    if (Populated) return;
+                    IngredientsQuantity.ItemChanged
+                        .Select(_ => promotion
+                            .CostOfIngredients(IngredientsQuantity.ToDictionary(pair => pair.Key, pair => pair.Value)))
+                        .ToProperty(this, x => x.Cost, out cost, promotion.CostOfAllIngredients);
+                    this.WhenAnyValue(x => x.QuantityYield)
+                        .Select(promotion.ProfitOfProduct)
+                        .ToProperty(this, x => x.Profit, out profit, promotion.AverageProfitOfProduct);
+                    Populated = true;
+                });
         }
 
         public string Name
@@ -61,5 +68,7 @@ namespace PromotionViabilityWpf.ViewModel
         {
             get { return cost.Value; }
         }
+
+        public bool Populated { get; private set; }
     }
 }

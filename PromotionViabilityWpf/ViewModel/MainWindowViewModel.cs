@@ -13,7 +13,7 @@ namespace PromotionViabilityWpf.ViewModel
 {
     public class MainWindowViewModel : ReactiveObject
     {
-        public static readonly List<PromotionViewModel> AvailablePromotions;
+        private static readonly List<PromotionViewModel> AvailablePromotions;
 
         static MainWindowViewModel()
         {
@@ -24,7 +24,9 @@ namespace PromotionViabilityWpf.ViewModel
 
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private ReactiveList<Task> activeTasks;
-        public ReactiveList<PromotionViewModel> Promotions { get; private set; } 
+        private readonly ReactiveList<PromotionViewModel> promotions;
+
+        public IReactiveDerivedList<PromotionViewModel> LoadedPromotions;
 
         private readonly ObservableAsPropertyHelper<Boolean> loading; 
         public Boolean IsLoading
@@ -40,18 +42,29 @@ namespace PromotionViabilityWpf.ViewModel
                 .Select(x => x != 0)
                 .ToProperty(this, x => x.IsLoading, out loading);
 
-            Promotions = new ReactiveList<PromotionViewModel>();
-            Promotions.ItemsAdded
+            // Create list and add initial items
+            promotions = new ReactiveList<PromotionViewModel>() { ChangeTrackingEnabled = true };
+            promotions.AddRange(AvailablePromotions);
+            Reload();
+
+            // Set up behaviours
+            promotions.ItemsAdded
                 .Subscribe(Load);
-            Promotions.ShouldReset.Subscribe(_ => Reload());
-            Promotions.AddRange(AvailablePromotions);
+            promotions.ShouldReset.Subscribe(_ => Reload());
+
+            LoadedPromotions = promotions.CreateDerivedCollection(x => x, vm => vm.Populated);
         }
 
         public void Reload()
         {
-            var promotions = Promotions.Select(p => p.Promotion).ToList();
-            Load<int, Item>(promotions);
-            Load<int, AggregateListing>(promotions);
+            var allPromotions = promotions.Select(p => p.Promotion).ToList();
+            Load<int, Item>(allPromotions);
+            Load<int, AggregateListing>(allPromotions);
+        }
+
+        public void ReloadPrices()
+        {
+            Load<int, AggregateListing>(promotions.Select(p => p.Promotion));
         }
 
         private void Load(PromotionViewModel vm)

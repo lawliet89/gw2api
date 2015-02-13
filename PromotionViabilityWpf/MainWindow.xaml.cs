@@ -1,6 +1,5 @@
-﻿using GW2NET.Commerce;
-using GW2NET.Items;
-using PromotionViabilityWpf.Data;
+﻿using System.Diagnostics;
+using System.Windows;
 using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 
@@ -19,6 +18,7 @@ namespace PromotionViabilityWpf
 
             MainWindowViewModel = new MainWindowViewModel();
             this.OneWayBind(ViewModel, x => x.IsLoading, x => x.LoadingIndicator.Visibility);
+            this.OneWayBind(ViewModel, vm => vm.LoadedPromotions, x => x.PromotionList.ItemsSource);
         }
 
         object IViewFor.ViewModel
@@ -31,6 +31,14 @@ namespace PromotionViabilityWpf
         {
             get { return MainWindowViewModel; }
             set { MainWindowViewModel = value; }
+        }
+
+        public void DebuggerBreak(object sender, RoutedEventArgs e)
+        {
+            if (Debugger.IsAttached)
+            {
+                Debugger.Break();
+            }
         }
     }
 }

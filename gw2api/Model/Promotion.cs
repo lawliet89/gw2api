@@ -17,7 +17,7 @@ namespace gw2api.Model
         public Yield QuantityYield { get; set; }
         public Dictionary<ItemBundledEntity, int> Ingredients { get; set; }
 
-        public Coin CostOfIngridients
+        public Coin CostOfAllIngredients
         {
             get
             {
@@ -38,7 +38,7 @@ namespace gw2api.Model
         {
             get
             {
-                return AverageProfitOfProduct - CostOfIngridients;
+                return AverageProfitOfProduct - CostOfAllIngredients;
             }
         }
 
@@ -125,5 +125,10 @@ namespace gw2api.Model
         }
 
         #endregion
+
+        public bool Populated
+        {
+            get { return ((IBundlelable<int, Item>) this).Entities.All(e => e.Object != null); }
+        }
     }
 }
