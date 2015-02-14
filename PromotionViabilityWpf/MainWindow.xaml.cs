@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows;
+using PromotionViabilityWpf.View;
 using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 
