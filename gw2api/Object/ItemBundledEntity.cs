@@ -6,14 +6,13 @@ namespace gw2api.Object
     public class ItemBundledEntity : IBundledEntity<int, Item>, 
         IBundledEntity<int, AggregateListing>
     {
-
-        private int id;
         public Item Item { get; private set; }
         public AggregateListing Listings { get; private set; }
+        public byte[] IconPng { get; private set; }
 
         public ItemBundledEntity(int id)
         {
-            this.id = id;
+            this.Identifier = id;
         }
 
         public Coin MaxOfferUnitPrice
@@ -38,10 +37,6 @@ namespace gw2api.Object
             set { Listings = value; }
         }
 
-        public int Identifier
-        {
-            get { return id; }
-            set { id = value; }
-        }
+        public int Identifier { get; private set; }
     }
 }

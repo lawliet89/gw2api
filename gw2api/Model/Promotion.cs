@@ -11,7 +11,8 @@ using GW2NET.Items;
 
 namespace gw2api.Model
 {
-    public class Promotion : IBundlelable<int, Item>, IBundlelable<int, AggregateListing>
+    public class Promotion : IBundlelable<int, Item>, 
+        IBundlelable<int, AggregateListing>
     {
         public ItemBundledEntity Promoted { get; set; }
         public Yield QuantityYield { get; set; }
