@@ -96,6 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Extensions\MiscExtensions.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Data\Promotions.cs" />
     <Compile Include="ViewModel\PromotionViewModel.cs" />

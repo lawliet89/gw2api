@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using gw2api.Extension;
+using System.Windows.Media.Imaging;
 using gw2api.Model;
 using gw2api.Object;
+using PromotionViabilityWpf.Extensions;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.ViewModel
@@ -92,6 +93,11 @@ namespace PromotionViabilityWpf.ViewModel
         public Coin PromotedMinSalePrice
         {
             get { return promotedMinSalePrice.Value; }
+        }
+
+        public BitmapImage Icon
+        {
+            get { return Promotion.Promoted.IconPng.ToImage(); }
         }
     }
 }

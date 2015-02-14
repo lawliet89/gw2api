@@ -1,4 +1,5 @@
-﻿using PromotionViabilityWpf.ViewModel;
+﻿using PromotionViabilityWpf.Extensions;
+using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.View
@@ -13,6 +14,7 @@ namespace PromotionViabilityWpf.View
             InitializeComponent();
 
             this.OneWayBind(ViewModel, vm => vm.Name, x => x.Name.Text);
+            this.OneWayBind(ViewModel, vm => vm.Icon, x => x.Icon.Source);
         }
 
         object IViewFor.ViewModel
