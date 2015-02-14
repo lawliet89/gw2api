@@ -8,8 +8,8 @@ namespace gw2api.Object
     {
 
         private int id;
-        private Item item;
-        private AggregateListing listing;
+        public Item Item { get; private set; }
+        public AggregateListing Listings { get; private set; }
 
         public ItemBundledEntity(int id)
         {
@@ -18,24 +18,24 @@ namespace gw2api.Object
 
         public Coin MaxOfferUnitPrice
         {
-            get { return listing.BuyOffers.UnitPrice; }
+            get { return Listings.BuyOffers.UnitPrice; }
         }
 
         public Coin MinSaleUnitPrice
         {
-            get { return listing.SellOffers.UnitPrice; }
+            get { return Listings.SellOffers.UnitPrice; }
         }
 
         public Item Object
         {
-            get { return item; }
-            set { item = value; }
+            get { return Item; }
+            set { Item = value; }
         }
 
         AggregateListing IBundledEntity<int, AggregateListing>.Object
         {
-            get { return listing; }
-            set { listing = value; }
+            get { return Listings; }
+            set { Listings = value; }
         }
 
         public int Identifier

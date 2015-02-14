@@ -92,26 +92,12 @@ namespace gw2api.Model
 
         IEnumerable<IBundledEntity<int, Item>> IBundlelable<int, Item>.Entities
         {
-            get
-            {
-                yield return Promoted;
-                foreach (var item in Ingredients)
-                {
-                    yield return item.Key;
-                }
-            }
+            get { return Items; }
         }
 
         IEnumerable<IBundledEntity<int, AggregateListing>> IBundlelable<int, AggregateListing>.Entities
         {
-            get
-            {
-                yield return Promoted;
-                foreach (var item in Ingredients)
-                {
-                    yield return item.Key;
-                }
-            }
+            get { return Items; }
         }
 
         IRepository<int, AggregateListing> IBundlelable<int, AggregateListing>.Service
@@ -126,12 +112,24 @@ namespace gw2api.Model
 
         #endregion
 
+        public IEnumerable<ItemBundledEntity> Items
+        {
+            get
+            {
+                yield return Promoted;
+                foreach (var item in Ingredients)
+                {
+                    yield return item.Key;
+                }
+            }
+        }
+
         public bool Populated
         {
             get
             {
-                return ((IBundlelable<int, Item>) this).Entities.All(e => e.Object != null)
-                       && ((IBundlelable<int, AggregateListing>) this).Entities.All(e => e.Object != null);
+                return ((IBundlelable<int, Item>)this).Entities.All(e => e.Object != null)
+                       && ((IBundlelable<int, AggregateListing>)this).Entities.All(e => e.Object != null);
             }
         }
     }

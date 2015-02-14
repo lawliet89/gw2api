@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using gw2api.Extension;
 using gw2api.Model;
 using gw2api.Object;
 using ReactiveUI;
@@ -22,16 +23,29 @@ namespace PromotionViabilityWpf.ViewModel
                 {
                     ChangeTrackingEnabled = true
                 };
+
             IngredientsQuantity.ItemChanged
                         .Select(_ => promotion
                             .CostOfIngredients(IngredientsQuantity.ToDictionary(pair => pair.Key, pair => pair.Value)))
                         .ToProperty(this, x => x.Cost, out cost);
-            this.WhenAnyValue(x => x.QuantityYield)
+
+            this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
+                .ToProperty(this, x => x.PromotedMinSalePrice, out promotedMinSalePrice);
+
+            Observable.Merge(new[]
+            {
+                this.WhenAnyValue(x => x.QuantityYield),
+                this.WhenAnyValue(x => x.PromotedMinSalePrice).Select(_ => QuantityYield)
+            })
                 .Select(promotion.ProfitOfProduct)
                 .ToProperty(this, x => x.Profit, out profit);
-            this.WhenAnyValue(x => x.Promotion)
-                .Select(x => x.Populated)
-                .ToProperty(this, x => x.Populated, out populated);
+
+            CheckPopulated();
+        }
+
+        public void CheckPopulated()
+        {
+            Populated = Promotion.Populated;
         }
 
         public string Name
@@ -64,12 +78,20 @@ namespace PromotionViabilityWpf.ViewModel
             get { return cost.Value; }
         }
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private ObservableAsPropertyHelper<bool> populated;
+        private bool populated;
 
         public bool Populated
         {
-            get { return populated.Value; }
+            get { return populated; }
+            private set { this.RaiseAndSetIfChanged(ref populated, value); }
+        }
+
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        private ObservableAsPropertyHelper<Coin> promotedMinSalePrice;
+
+        public Coin PromotedMinSalePrice
+        {
+            get { return promotedMinSalePrice.Value; }
         }
     }
 }

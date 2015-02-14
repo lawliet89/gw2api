@@ -83,10 +83,15 @@ namespace PromotionViabilityWpf.ViewModel
                 await task;
 
                 activeTasks.Remove(task);
+                CheckPopulated();
             });
             // TODO: Handle exceptions
             await command.ExecuteAsync();
         }
 
+        private void CheckPopulated()
+        {
+            promotions.ForEach(p => p.CheckPopulated());
+        }
     }
 }
