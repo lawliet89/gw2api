@@ -128,7 +128,11 @@ namespace gw2api.Model
 
         public bool Populated
         {
-            get { return ((IBundlelable<int, Item>) this).Entities.All(e => e.Object != null); }
+            get
+            {
+                return ((IBundlelable<int, Item>) this).Entities.All(e => e.Object != null)
+                       && ((IBundlelable<int, AggregateListing>) this).Entities.All(e => e.Object != null);
+            }
         }
     }
 }

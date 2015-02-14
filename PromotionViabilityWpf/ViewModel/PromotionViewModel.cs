@@ -22,21 +22,16 @@ namespace PromotionViabilityWpf.ViewModel
                 {
                     ChangeTrackingEnabled = true
                 };
-            this.WhenAnyValue(x => x.Promotion)
-                .Select(p => p.Populated)
-                .Where(p => p)
-                .Do(loaded =>
-                {
-                    if (Populated) return;
-                    IngredientsQuantity.ItemChanged
+            IngredientsQuantity.ItemChanged
                         .Select(_ => promotion
                             .CostOfIngredients(IngredientsQuantity.ToDictionary(pair => pair.Key, pair => pair.Value)))
-                        .ToProperty(this, x => x.Cost, out cost, promotion.CostOfAllIngredients);
-                    this.WhenAnyValue(x => x.QuantityYield)
-                        .Select(promotion.ProfitOfProduct)
-                        .ToProperty(this, x => x.Profit, out profit, promotion.AverageProfitOfProduct);
-                    Populated = true;
-                });
+                        .ToProperty(this, x => x.Cost, out cost);
+            this.WhenAnyValue(x => x.QuantityYield)
+                .Select(promotion.ProfitOfProduct)
+                .ToProperty(this, x => x.Profit, out profit);
+            this.WhenAnyValue(x => x.Promotion)
+                .Select(x => x.Populated)
+                .ToProperty(this, x => x.Populated, out populated);
         }
 
         public string Name
@@ -69,6 +64,12 @@ namespace PromotionViabilityWpf.ViewModel
             get { return cost.Value; }
         }
 
-        public bool Populated { get; private set; }
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        private ObservableAsPropertyHelper<bool> populated;
+
+        public bool Populated
+        {
+            get { return populated.Value; }
+        }
     }
 }
