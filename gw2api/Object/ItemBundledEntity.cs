@@ -4,7 +4,8 @@ using GW2NET.Items;
 namespace gw2api.Object
 {
     public class ItemBundledEntity : IBundledEntity<int, Item>, 
-        IBundledEntity<int, AggregateListing>
+        IBundledEntity<int, AggregateListing>,
+        IBundleableRenderableEntity<Item>
     {
         public Item Item { get; private set; }
         public AggregateListing Listings { get; private set; }
@@ -12,7 +13,7 @@ namespace gw2api.Object
 
         public ItemBundledEntity(int id)
         {
-            this.Identifier = id;
+            Identifier = id;
         }
 
         public Coin MaxOfferUnitPrice
@@ -38,5 +39,15 @@ namespace gw2api.Object
         }
 
         public int Identifier { get; private set; }
+
+        public Item Renderable
+        {
+            get { return Item; }
+        }
+
+        public byte[] Icon
+        {
+            set { IconPng = value; }
+        }
     }
 }

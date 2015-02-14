@@ -12,7 +12,8 @@ using GW2NET.Items;
 namespace gw2api.Model
 {
     public class Promotion : IBundlelable<int, Item>, 
-        IBundlelable<int, AggregateListing>
+        IBundlelable<int, AggregateListing>,
+        IBundleableRenderable<Item>
     {
         public ItemBundledEntity Promoted { get; set; }
         public Yield QuantityYield { get; set; }
@@ -125,11 +126,17 @@ namespace gw2api.Model
             }
         }
 
+        public IEnumerable<IBundleableRenderableEntity<Item>> Renderables
+        {
+            get { return Promoted.Yield(); }
+        }
+
         public bool Populated
         {
             get
             {
-                return ((IBundlelable<int, Item>)this).Entities.All(e => e.Object != null)
+                return Promoted.IconPng != null && Promoted.IconPng.Length > 0
+                    && ((IBundlelable<int, Item>)this).Entities.All(e => e.Object != null)
                        && ((IBundlelable<int, AggregateListing>)this).Entities.All(e => e.Object != null);
             }
         }

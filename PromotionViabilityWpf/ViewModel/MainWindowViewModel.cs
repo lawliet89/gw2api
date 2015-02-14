@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using gw2api.Extension;
 using gw2api.Request;
 using GW2NET.Commerce;
+using GW2NET.Common;
 using GW2NET.Items;
 using ReactiveUI;
 
@@ -55,26 +57,26 @@ namespace PromotionViabilityWpf.ViewModel
             LoadedPromotions = promotions.CreateDerivedCollection(x => x, vm => vm.Populated);
         }
 
-        public void Reload()
+        public async void Reload()
         {
             var allPromotions = promotions.Select(p => p.Promotion).ToList();
-            Load<int, Item>(allPromotions);
-            Load<int, AggregateListing>(allPromotions);
+            await LoadWithICons<int, Item>(allPromotions);
+            await Load<int, AggregateListing>(allPromotions);
         }
 
-        public void ReloadPrices()
+        public async void ReloadPrices()
         {
-            Load<int, AggregateListing>(promotions.Select(p => p.Promotion));
+            await Load<int, AggregateListing>(promotions.Select(p => p.Promotion));
         }
 
-        private void Load(PromotionViewModel vm)
+        private async void Load(PromotionViewModel vm)
         {
             var promotion = vm.Promotion.Yield().ToList();
-            Load<int, Item>(promotion);
-            Load<int, AggregateListing>(promotion);
+            await LoadWithICons<int, Item>(promotion);
+            await Load<int, AggregateListing>(promotion);
         }
 
-        private async void Load<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundlelable)
+        private Task<Unit> Load<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundlelable)
         {
             var command = ReactiveCommand.CreateAsyncTask(async _ =>
             {
@@ -86,7 +88,27 @@ namespace PromotionViabilityWpf.ViewModel
                 CheckPopulated();
             });
             // TODO: Handle exceptions
-            await command.ExecuteAsync();
+            return command.ExecuteAsyncTask();
+        }
+
+        private async Task<Task<Unit>> LoadWithICons<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundlelable)
+            where TValue : IRenderable
+        {
+            var list = bundlelable as IList<IBundlelable<TKey, TValue>> ?? bundlelable.ToList();
+            await Load(list);
+            var iconBundlesables = list.Cast<IBundleableRenderable<TValue>>();
+
+            var command = ReactiveCommand.CreateAsyncTask(async _ =>
+            {
+                var task = Bundler.LoadAndSetIcons(iconBundlesables);
+                activeTasks.Add(task);
+                await task;
+
+                activeTasks.Remove(task);
+                CheckPopulated();
+            });
+            // TODO: Handle exceptions
+            return command.ExecuteAsyncTask();
         }
 
         private void CheckPopulated()
