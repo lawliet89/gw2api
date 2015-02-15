@@ -18,12 +18,20 @@ namespace gw2api.Object
 
         public Coin MaxOfferUnitPrice
         {
-            get { return Listings.BuyOffers.UnitPrice; }
+            get
+            {
+                if (Listings != null) return Listings.BuyOffers.UnitPrice;
+                return null;
+            }
         }
 
         public Coin MinSaleUnitPrice
         {
-            get { return Listings.SellOffers.UnitPrice; }
+            get
+            {
+                if (Listings != null) return Listings.SellOffers.UnitPrice;
+                return null;
+            }
         }
 
         public Item Object

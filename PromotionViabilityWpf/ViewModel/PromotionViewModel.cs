@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Media.Imaging;
+using gw2api.Extension;
 using gw2api.Model;
 using gw2api.Object;
 using PromotionViabilityWpf.Extensions;
@@ -17,8 +19,8 @@ namespace PromotionViabilityWpf.ViewModel
         public PromotionViewModel(Promotion promotion)
         {
             Promotion = promotion;
-
             QuantityYield = promotion.QuantityYield.Average;
+            
             IngredientsQuantity =
                 new ReactiveList<KeyValuePair<int, int>>(
                     promotion.Ingredients.Select(pair => new KeyValuePair<int, int>(pair.Key.Identifier, 0)))
@@ -26,7 +28,17 @@ namespace PromotionViabilityWpf.ViewModel
                     ChangeTrackingEnabled = true
                 };
 
-            IngredientsQuantity.ItemChanged
+            ingredients = new ReactiveList<ItemBundledEntity>(promotion.Ingredients.Keys)
+            {
+                ChangeTrackingEnabled = true
+            };
+
+            var ingredientsObservables = new[]
+            {
+                IngredientsQuantity.ItemChanged.Select(_ => Unit.Default),
+                ingredients.ItemChanged.Select(_ => Unit.Default)
+            };
+            Observable.Merge(ingredientsObservables)
                         .Select(_ => promotion
                             .CostOfIngredients(IngredientsQuantity.ToDictionary(pair => pair.Key, pair => pair.Value)))
                         .ToProperty(this, x => x.Cost, out cost);
@@ -100,5 +112,7 @@ namespace PromotionViabilityWpf.ViewModel
         {
             get { return Promotion.Promoted.IconPng.ToImage(); }
         }
+
+        private ReactiveList<ItemBundledEntity> ingredients;
     }
 }
