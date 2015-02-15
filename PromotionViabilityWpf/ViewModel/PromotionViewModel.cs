@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Media.Imaging;
-using gw2api.Extension;
 using gw2api.Object;
+using GW2NET.Commerce;
 using PromotionViabilityWpf.Extensions;
 using PromotionViabilityWpf.Model;
 using ReactiveUI;
@@ -28,15 +27,14 @@ namespace PromotionViabilityWpf.ViewModel
                     ChangeTrackingEnabled = true
                 };
 
-            ingredients = new ReactiveList<ItemBundledEntity>(promotion.Ingredients.Keys)
-            {
-                ChangeTrackingEnabled = true
-            };
+            ingredients = new ReactiveList<ItemBundledEntity>(promotion.Ingredients.Keys) { ChangeTrackingEnabled = true };
 
             var ingredientsObservables = new[]
             {
                 IngredientsQuantity.ItemChanged.Select(_ => Unit.Default),
-                ingredients.ItemChanged.Select(_ => Unit.Default)
+                IngredientsQuantity.ShouldReset.Select(_ => Unit.Default),
+                ingredients.ItemChanged.Select(_ => Unit.Default),
+                ingredients.ShouldReset.Select(_ => Unit.Default)
             };
             Observable.Merge(ingredientsObservables)
                         .Select(_ => promotion
@@ -113,6 +111,6 @@ namespace PromotionViabilityWpf.ViewModel
             get { return Promotion.Promoted.IconPng.ToImage(); }
         }
 
-        private ReactiveList<ItemBundledEntity> ingredients;
+        private ReactiveList<ItemBundledEntity> ingredients; 
     }
 }

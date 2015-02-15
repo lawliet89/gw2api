@@ -11,7 +11,15 @@ namespace PromotionViabilityWpf.Model
         IBundleableRenderableEntity<Item>
     {
         public Item Item { get; private set; }
-        public AggregateListing Listings { get; private set; }
+
+        private AggregateListing listings;
+
+        public AggregateListing Listings
+        {
+            get { return listings; }
+            private set { this.RaiseAndSetIfChanged(ref listings, value); }
+        }
+
         public byte[] IconPng { get; private set; }
 
         public ItemBundledEntity(int id)
