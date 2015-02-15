@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Windows.Media.Imaging;
@@ -38,7 +39,7 @@ namespace PromotionViabilityWpf.ViewModel
                 this.WhenAnyValue(x => x.QuantityYield),
                 this.WhenAnyValue(x => x.PromotedMinSalePrice).Select(_ => QuantityYield)
             })
-                .Select(promotion.ProfitOfProduct)
+                .Select(q => promotion.ProfitOfProduct(Convert.ToInt32(q)))
                 .ToProperty(this, x => x.Profit, out profit);
 
             CheckPopulated();
@@ -56,10 +57,10 @@ namespace PromotionViabilityWpf.ViewModel
 
         private int quantityYield;
 
-        public int QuantityYield
+        public double? QuantityYield
         {
             get { return quantityYield; }
-            set { this.RaiseAndSetIfChanged(ref quantityYield, value); }
+            set { this.RaiseAndSetIfChanged(ref quantityYield, Convert.ToInt32(value)); }
         }
 
         public ReactiveList<KeyValuePair<int, int>> IngredientsQuantity { private set; get; }

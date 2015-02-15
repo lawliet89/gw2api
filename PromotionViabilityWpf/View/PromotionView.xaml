@@ -5,9 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Width="300" Height="300" Margin="0,0,10,10" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+             Width="300" Height="300" Margin="0,0,10,10" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Background="White">
     <Grid Margin="0">
-        <TextBlock x:Name="Name" TextWrapping="Wrap" Margin="10,10,95.2,257.2" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" />
-        <Image x:Name="Icon" Margin="245,10,22.2,257.2" Width="32" Height="32"/>
+        <TextBlock x:Name="PromotedName" TextWrapping="Wrap" Margin="10,10,95.2,257.2" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="Promoted Name" />
+        <Image x:Name="Icon" Margin="245,10,22.2,257.2" Width="32" Height="32" Source="/PromotionViabilityWpf;component/icon.ico"/>
+        <Label Content="Quanity Yield:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top"/>
+        <controls:NumericUpDown x:Name="QuantityYield" Margin="196,47,10.2,226.2"/>
+
     </Grid>
 </UserControl>
