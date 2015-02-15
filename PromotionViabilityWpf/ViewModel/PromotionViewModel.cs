@@ -39,8 +39,8 @@ namespace PromotionViabilityWpf.ViewModel
                 this.WhenAnyValue(x => x.QuantityYield),
                 this.WhenAnyValue(x => x.PromotedMinSalePrice).Select(_ => QuantityYield)
             })
-                .Select(q => promotion.ProfitOfProduct(Convert.ToInt32(q)))
-                .ToProperty(this, x => x.Profit, out profit);
+                .Select(promotion.ProfitOfProduct)
+                .ToProperty(this, x => x.ProfitOfProduct, out profitOfProduct);
 
             CheckPopulated();
         }
@@ -57,19 +57,19 @@ namespace PromotionViabilityWpf.ViewModel
 
         private int quantityYield;
 
-        public double? QuantityYield
+        public int QuantityYield
         {
             get { return quantityYield; }
-            set { this.RaiseAndSetIfChanged(ref quantityYield, Convert.ToInt32(value)); }
+            set { this.RaiseAndSetIfChanged(ref quantityYield, value); }
         }
 
         public ReactiveList<KeyValuePair<int, int>> IngredientsQuantity { private set; get; }
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private ObservableAsPropertyHelper<Coin> profit;
+        private ObservableAsPropertyHelper<Coin> profitOfProduct;
 
-        public Coin Profit
+        public Coin ProfitOfProduct
         {
-            get { return profit.Value; }
+            get { return profitOfProduct.Value; }
         }
 
         // ReSharper disable once FieldCanBeMadeReadOnly.Local

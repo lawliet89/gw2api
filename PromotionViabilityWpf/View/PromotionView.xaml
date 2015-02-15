@@ -7,10 +7,12 @@
              mc:Ignorable="d" 
              Width="300" Height="300" Margin="0,0,10,10" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Background="White">
     <Grid Margin="0">
-        <TextBlock x:Name="PromotedName" TextWrapping="Wrap" Margin="10,10,95.2,257.2" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="Promoted Name" />
+        <TextBlock x:Name="PromotedName" TextWrapping="Wrap" Margin="10,10,95.2,257.2" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="Promoted Name" VerticalAlignment="Center" />
         <Image x:Name="Icon" Margin="245,10,22.2,257.2" Width="32" Height="32" Source="/PromotionViabilityWpf;component/icon.ico"/>
         <Label Content="Quanity Yield:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top"/>
         <controls:NumericUpDown x:Name="QuantityYield" Margin="196,47,10.2,226.2"/>
+        <Label Content="Sales Revenue" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="ProfitOfProduct" TextWrapping="Wrap" Margin="0,83,10.2,200.2" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="0g 0s 0c" VerticalAlignment="Center" HorizontalAlignment="Right" />
 
     </Grid>
 </UserControl>
