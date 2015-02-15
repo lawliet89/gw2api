@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using gw2api.Model;
 using gw2api.Object;
+using PromotionViabilityWpf.Model;
 
 namespace PromotionViabilityWpf.Data
 {

@@ -52,10 +52,8 @@
     <Compile Include="Extension\ItemExtensions.cs" />
     <Compile Include="Extension\MiscExtensions.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
-    <Compile Include="Model\Promotion.cs" />
     <Compile Include="Object\Coin.cs" />
     <Compile Include="Object\IBundleableRenderableEntity.cs" />
-    <Compile Include="Object\ItemBundledEntity.cs" />
     <Compile Include="Object\BundledEntity.cs" />
     <Compile Include="Object\Yield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

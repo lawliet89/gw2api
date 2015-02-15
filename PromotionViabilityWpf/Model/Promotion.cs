@@ -8,10 +8,12 @@ using GW2NET;
 using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
+using ReactiveUI;
 
-namespace gw2api.Model
+namespace PromotionViabilityWpf.Model
 {
-    public class Promotion : IBundlelable<int, Item>, 
+    public class Promotion : ReactiveObject,
+        IBundlelable<int, Item>, 
         IBundlelable<int, AggregateListing>,
         IBundleableRenderable<Item>
     {
@@ -82,7 +84,7 @@ namespace gw2api.Model
 
         public Coin CostOfIngredients(IDictionary<ItemBundledEntity, int> ingredients)
         {
-            return CostOfIngredients(ingredients.ToDictionary(pair => pair.Key.Identifier, pair => pair.Value));
+            return CostOfIngredients((IDictionary<int, int>) ingredients.ToDictionary(pair => pair.Key.Identifier, pair => pair.Value));
         }
 
         public string Name

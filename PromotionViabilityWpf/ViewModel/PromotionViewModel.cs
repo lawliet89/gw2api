@@ -5,9 +5,9 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Media.Imaging;
 using gw2api.Extension;
-using gw2api.Model;
 using gw2api.Object;
 using PromotionViabilityWpf.Extensions;
+using PromotionViabilityWpf.Model;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.ViewModel

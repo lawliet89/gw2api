@@ -7,12 +7,12 @@ namespace gw2api.Object
     {
         public int Upper { get; set; }
         public int Lower { get; set; }
-        private int? _average;
+        private int? average;
 
         public int Average
         {
-            get { return _average ?? CalculateAverage(); }
-            set { _average = value; }
+            get { return average ?? CalculateAverage(); }
+            set { average = value; }
         } // Can be unknown, then it's null
 
         public int CalculateAverage()

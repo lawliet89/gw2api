@@ -1,9 +1,12 @@
-﻿using GW2NET.Commerce;
+﻿using gw2api.Object;
+using GW2NET.Commerce;
 using GW2NET.Items;
+using ReactiveUI;
 
-namespace gw2api.Object
+namespace PromotionViabilityWpf.Model
 {
-    public class ItemBundledEntity : IBundledEntity<int, Item>, 
+    public class ItemBundledEntity : ReactiveObject,
+        IBundledEntity<int, Item>, 
         IBundledEntity<int, AggregateListing>,
         IBundleableRenderableEntity<Item>
     {
