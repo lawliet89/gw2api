@@ -14,6 +14,7 @@ namespace PromotionViabilityWpf
         {
             Locator.CurrentMutable.Register(() => new PromotionView(), typeof(IViewFor<PromotionViewModel>));
             Locator.CurrentMutable.RegisterConstant(new IntegerToNullableDouble(), typeof(IBindingTypeConverter));
+            Locator.CurrentMutable.RegisterConstant(new DebugLogger(), typeof(ILogger));
             App.Main();
         }
     }
