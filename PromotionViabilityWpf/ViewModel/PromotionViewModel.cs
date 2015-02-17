@@ -5,7 +5,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Media.Imaging;
 using gw2api.Object;
-using GW2NET.Commerce;
 using PromotionViabilityWpf.Extensions;
 using PromotionViabilityWpf.Model;
 using ReactiveUI;
@@ -22,21 +21,24 @@ namespace PromotionViabilityWpf.ViewModel
             Promotion = promotion;
             QuantityYield = promotion.QuantityYield.Average;
 
-            ingredientsQuantities = new ReactiveList<int>(promotion.Ingredients.Select(_=>  0));
-            ingredientsEntities = new ReactiveList<ItemBundledEntity>(promotion.Ingredients.Keys);
+            ingredientsQuantities = new ReactiveList<int>(promotion.IngredientsEntities.Select(_=>  0));
 
             var ingredientsObservables = new[]
             {
-                ingredientsQuantities.Changed.Select(_ => Unit.Default),
-                ingredientsQuantities.ItemChanged.Select(_ => Unit.Default),
-                ingredientsQuantities.ShouldReset.Select(_ => Unit.Default),
-                ingredientsEntities.Changed.Select(_ => Unit.Default),
-                ingredientsEntities.ItemChanged.Select(_ => Unit.Default),
-                ingredientsEntities.ShouldReset.Select(_ => Unit.Default)
+                ingredientsQuantities.ItemChanged.Select(_ => Ingredients),
+                ingredientsQuantities.ShouldReset.Select(_ => Ingredients),
+                Promotion.IngredientsEntities.ItemChanged.Select(_ => Ingredients),
+                Promotion.IngredientsEntities.ShouldReset.Select(_ => Ingredients),
             };
             Observable.Merge(ingredientsObservables)
-                .Select(_ => promotion.CostOfIngredients(Ingredients))
+                .Select(promotion.CostOfIngredients)
                 .ToProperty(this, x => x.Cost, out cost);
+
+            Observable.Merge(ingredientsObservables)
+                .Subscribe(_ =>
+                {
+                    this.Log().Info("Ingredients change detected");
+                });
 
             this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
                 .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice);
@@ -108,13 +110,12 @@ namespace PromotionViabilityWpf.ViewModel
 
         // Due KeyValuePair not being able to report changes, we will have to create two separate lists
         private ReactiveList<int> ingredientsQuantities;
-        private ReactiveList<ItemBundledEntity> ingredientsEntities;
 
         public Dictionary<ItemBundledEntity, int> Ingredients
         {
             get
             {
-                return ingredientsEntities.Zip(ingredientsQuantities, (k, v) => new {k, v})
+                return Promotion.IngredientsEntities.Zip(ingredientsQuantities, (k, v) => new { k, v })
                     .ToDictionary(x => x.k, x => x.v);
             }
         }

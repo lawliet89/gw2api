@@ -9,6 +9,7 @@ using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
 using ReactiveUI;
+using Splat;
 
 namespace PromotionViabilityWpf.Model
 {
@@ -17,15 +18,49 @@ namespace PromotionViabilityWpf.Model
         IBundlelable<int, AggregateListing>,
         IBundleableRenderable<Item>
     {
-        public ItemBundledEntity Promoted { get; set; }
-        public Yield QuantityYield { get; set; }
-        public Dictionary<ItemBundledEntity, int> Ingredients { get; set; }
+        public ItemBundledEntity Promoted { get; private set; }
+        public Yield QuantityYield { get; private set; }
+
+        // To workaround the limitation of ReactiveUI
+        public List<int> IngredientsQuantity { get; private set; }
+        public ReactiveList<ItemBundledEntity> IngredientsEntities { get; private set; }
+
+        public Promotion(ItemBundledEntity promoted, Dictionary<ItemBundledEntity, int> ingredients, Yield quantityYield)
+        {
+            Promoted = promoted;
+            QuantityYield = quantityYield;
+            IngredientsQuantity = new List<int>();
+            IngredientsEntities = new ReactiveList<ItemBundledEntity>() { ChangeTrackingEnabled = true };
+
+            Ingredients = ingredients;
+
+            Items = new ReactiveList<ItemBundledEntity> { ChangeTrackingEnabled = true };
+
+            Items.Add(Promoted);
+            Items.AddRange(IngredientsEntities);
+        }
+
+        public Dictionary<ItemBundledEntity, int> Ingredients
+        {
+            get
+            {
+                return IngredientsEntities.Zip(IngredientsQuantity, (k, v) => new {k, v})
+                    .ToDictionary(x => x.k, x => x.v);
+            }
+            private set
+            {
+                IngredientsEntities.Clear();
+                IngredientsEntities.AddRange(value.Keys);
+                IngredientsQuantity.Clear();
+                IngredientsQuantity.AddRange(value.Values);
+            }
+        }
 
         public Coin CostOfAllIngredients
         {
             get
             {
-                return Ingredients.Select(pair => pair.Key.MaxOfferUnitPrice * pair.Value)
+                return IngredientsEntities.Zip(IngredientsQuantity, (i, q) => i.MaxOfferUnitPrice * q)
                     .Aggregate((sum, itemCost) => sum + itemCost);
             }
         }
@@ -69,15 +104,16 @@ namespace PromotionViabilityWpf.Model
         public Coin CostOfIngredients(IDictionary<int, int> ingredients)
         {
             var totalCost = new Coin(0);
-            foreach (var ingredient in Ingredients)
+            foreach (var pair in IngredientsEntities.Zip(IngredientsQuantity, (i, q) => new { i, q }))
             {
-                var quantity = ingredient.Value;
-                var availableIngredient = ingredients.FirstOrDefault(i => i.Key == ingredient.Key.Identifier);
+                var ingredient = pair.i;
+                var quantity = pair.q;
+                var availableIngredient = ingredients.FirstOrDefault(i => i.Key == ingredient.Identifier);
                 if (!availableIngredient.IsDefault())
                 {
-                    quantity = Math.Max(0, quantity - ingredient.Value);
+                    quantity = Math.Max(0, quantity - availableIngredient.Value);
                 }
-                totalCost += quantity*ingredient.Key.MaxOfferUnitPrice;
+                totalCost += quantity*ingredient.MaxOfferUnitPrice;
             }
             return totalCost;
         }
@@ -116,17 +152,7 @@ namespace PromotionViabilityWpf.Model
 
         #endregion
 
-        public IEnumerable<ItemBundledEntity> Items
-        {
-            get
-            {
-                yield return Promoted;
-                foreach (var item in Ingredients)
-                {
-                    yield return item.Key;
-                }
-            }
-        }
+        public ReactiveList<ItemBundledEntity> Items { get; private set; }
 
         public IEnumerable<IBundleableRenderableEntity<Item>> Renderables
         {
