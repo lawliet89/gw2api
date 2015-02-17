@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -8,6 +9,7 @@ using GW2NET.Commerce;
 using PromotionViabilityWpf.Extensions;
 using PromotionViabilityWpf.Model;
 using ReactiveUI;
+using Splat;
 
 namespace PromotionViabilityWpf.ViewModel
 {
@@ -20,6 +22,7 @@ namespace PromotionViabilityWpf.ViewModel
             Promotion = promotion;
             QuantityYield = promotion.QuantityYield.Average;
             
+            // FIXME: Won't get update notifications
             IngredientsQuantity =
                 new ReactiveList<KeyValuePair<int, int>>(
                     promotion.Ingredients.Select(pair => new KeyValuePair<int, int>(pair.Key.Identifier, 0)))
@@ -27,14 +30,10 @@ namespace PromotionViabilityWpf.ViewModel
                     ChangeTrackingEnabled = true
                 };
 
-            ingredients = new ReactiveList<ItemBundledEntity>(promotion.Ingredients.Keys) { ChangeTrackingEnabled = true };
-
             var ingredientsObservables = new[]
             {
                 IngredientsQuantity.ItemChanged.Select(_ => Unit.Default),
-                IngredientsQuantity.ShouldReset.Select(_ => Unit.Default),
-                ingredients.ItemChanged.Select(_ => Unit.Default),
-                ingredients.ShouldReset.Select(_ => Unit.Default)
+                IngredientsQuantity.ShouldReset.Select(_ => Unit.Default)
             };
             Observable.Merge(ingredientsObservables)
                         .Select(_ => promotion
@@ -42,16 +41,15 @@ namespace PromotionViabilityWpf.ViewModel
                         .ToProperty(this, x => x.Cost, out cost);
 
             this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
-                .ToProperty(this, x => x.PromotedMinSalePrice, out promotedMinSalePrice);
+                .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice);
 
             Observable.Merge(new[]
             {
                 this.WhenAnyValue(x => x.QuantityYield),
-                this.WhenAnyValue(x => x.PromotedMinSalePrice).Select(_ => QuantityYield)
+                this.WhenAnyValue(x => x.PromotedMinUnitSalePrice).Select(_ => QuantityYield)
             })
                 .Select(promotion.ProfitOfProduct)
                 .ToProperty(this, x => x.ProfitOfProduct, out profitOfProduct);
-
             CheckPopulated();
         }
 
@@ -99,18 +97,16 @@ namespace PromotionViabilityWpf.ViewModel
         }
 
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private ObservableAsPropertyHelper<Coin> promotedMinSalePrice;
+        private ObservableAsPropertyHelper<Coin> promotedMinUnitSalePrice;
 
-        public Coin PromotedMinSalePrice
+        public Coin PromotedMinUnitSalePrice
         {
-            get { return promotedMinSalePrice.Value; }
+            get { return promotedMinUnitSalePrice.Value; }
         }
 
         public BitmapImage Icon
         {
             get { return Promotion.Promoted.IconPng.ToImage(); }
         }
-
-        private ReactiveList<ItemBundledEntity> ingredients; 
     }
 }

@@ -1,4 +1,5 @@
-﻿using gw2api.Object;
+﻿using System.Reactive.Linq;
+using gw2api.Object;
 using GW2NET.Commerce;
 using GW2NET.Items;
 using ReactiveUI;
@@ -10,7 +11,25 @@ namespace PromotionViabilityWpf.Model
         IBundledEntity<int, AggregateListing>,
         IBundleableRenderableEntity<Item>
     {
-        public Item Item { get; private set; }
+        public ItemBundledEntity(int id)
+        {
+            Identifier = id;
+
+            this.WhenAnyValue(x => x.Listings)
+                .Select(l => (Coin)l.BuyOffers.UnitPrice)
+                .ToProperty(this, x => x.MaxOfferUnitPrice, out maxOfferUnitPrice, 0);
+            this.WhenAnyValue(x => x.Listings)
+                .Select(l => (Coin)l.SellOffers.UnitPrice)
+                .ToProperty(this, x => x.MinSaleUnitPrice, out minSaleUnitPrice, 0);
+        }
+
+        private Item item;
+
+        public Item Item
+        {
+            get { return item; }
+            private set { this.RaiseAndSetIfChanged(ref item, value); }
+        }
 
         private AggregateListing listings;
 
@@ -20,31 +39,27 @@ namespace PromotionViabilityWpf.Model
             private set { this.RaiseAndSetIfChanged(ref listings, value); }
         }
 
-        public byte[] IconPng { get; private set; }
+        private byte[] iconPng;
 
-        public ItemBundledEntity(int id)
+        public byte[] IconPng
         {
-            Identifier = id;
+            get { return iconPng; }
+            private set { this.RaiseAndSetIfChanged(ref iconPng, value); }
         }
 
+        private readonly ObservableAsPropertyHelper<Coin> maxOfferUnitPrice; 
         public Coin MaxOfferUnitPrice
         {
-            get
-            {
-                if (Listings != null) return Listings.BuyOffers.UnitPrice;
-                return null;
-            }
+            get { return maxOfferUnitPrice.Value; }
         }
 
+        private readonly ObservableAsPropertyHelper<Coin> minSaleUnitPrice; 
         public Coin MinSaleUnitPrice
         {
-            get
-            {
-                if (Listings != null) return Listings.SellOffers.UnitPrice;
-                return null;
-            }
+            get { return minSaleUnitPrice.Value; }
         }
 
+        #region IBundledEntity Overrides
         public Item Object
         {
             get { return Item; }
@@ -68,5 +83,6 @@ namespace PromotionViabilityWpf.Model
         {
             set { IconPng = value; }
         }
+        #endregion
     }
 }

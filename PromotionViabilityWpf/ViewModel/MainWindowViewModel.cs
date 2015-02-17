@@ -15,14 +15,8 @@ namespace PromotionViabilityWpf.ViewModel
 {
     public class MainWindowViewModel : ReactiveObject
     {
-        private static readonly List<PromotionViewModel> AvailablePromotions;
-
-        static MainWindowViewModel()
-        {
-            AvailablePromotions =
-                new List<PromotionViewModel>(
-                    Data.Promotions.FineMaterialsTier6Promotions.Select(x => new PromotionViewModel(x)));
-        }
+        private static readonly IEnumerable<PromotionViewModel> AvailablePromotions = 
+            Data.Promotions.FineMaterialsTier6Promotions.Select(x => new PromotionViewModel(x));
 
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private ReactiveList<Task> activeTasks;
