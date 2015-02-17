@@ -84,7 +84,7 @@ namespace PromotionViabilityWpf.Model
 
         public Coin CostOfIngredients(IDictionary<ItemBundledEntity, int> ingredients)
         {
-            return CostOfIngredients((IDictionary<int, int>) ingredients.ToDictionary(pair => pair.Key.Identifier, pair => pair.Value));
+            return CostOfIngredients(ingredients.ToDictionary(pair => pair.Key.Identifier, pair => pair.Value));
         }
 
         public string Name

@@ -21,24 +21,22 @@ namespace PromotionViabilityWpf.ViewModel
         {
             Promotion = promotion;
             QuantityYield = promotion.QuantityYield.Average;
-            
-            // FIXME: Won't get update notifications
-            IngredientsQuantity =
-                new ReactiveList<KeyValuePair<int, int>>(
-                    promotion.Ingredients.Select(pair => new KeyValuePair<int, int>(pair.Key.Identifier, 0)))
-                {
-                    ChangeTrackingEnabled = true
-                };
+
+            ingredientsQuantities = new ReactiveList<int>(promotion.Ingredients.Select(_=>  0));
+            ingredientsEntities = new ReactiveList<ItemBundledEntity>(promotion.Ingredients.Keys);
 
             var ingredientsObservables = new[]
             {
-                IngredientsQuantity.ItemChanged.Select(_ => Unit.Default),
-                IngredientsQuantity.ShouldReset.Select(_ => Unit.Default)
+                ingredientsQuantities.Changed.Select(_ => Unit.Default),
+                ingredientsQuantities.ItemChanged.Select(_ => Unit.Default),
+                ingredientsQuantities.ShouldReset.Select(_ => Unit.Default),
+                ingredientsEntities.Changed.Select(_ => Unit.Default),
+                ingredientsEntities.ItemChanged.Select(_ => Unit.Default),
+                ingredientsEntities.ShouldReset.Select(_ => Unit.Default)
             };
             Observable.Merge(ingredientsObservables)
-                        .Select(_ => promotion
-                            .CostOfIngredients(IngredientsQuantity.ToDictionary(pair => pair.Key, pair => pair.Value)))
-                        .ToProperty(this, x => x.Cost, out cost);
+                .Select(_ => promotion.CostOfIngredients(Ingredients))
+                .ToProperty(this, x => x.Cost, out cost);
 
             this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
                 .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice);
@@ -71,7 +69,6 @@ namespace PromotionViabilityWpf.ViewModel
             set { this.RaiseAndSetIfChanged(ref quantityYield, value); }
         }
 
-        public ReactiveList<KeyValuePair<int, int>> IngredientsQuantity { private set; get; }
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private ObservableAsPropertyHelper<Coin> profitOfProduct;
 
@@ -107,6 +104,19 @@ namespace PromotionViabilityWpf.ViewModel
         public BitmapImage Icon
         {
             get { return Promotion.Promoted.IconPng.ToImage(); }
+        }
+
+        // Due KeyValuePair not being able to report changes, we will have to create two separate lists
+        private ReactiveList<int> ingredientsQuantities;
+        private ReactiveList<ItemBundledEntity> ingredientsEntities;
+
+        public Dictionary<ItemBundledEntity, int> Ingredients
+        {
+            get
+            {
+                return ingredientsEntities.Zip(ingredientsQuantities, (k, v) => new {k, v})
+                    .ToDictionary(x => x.k, x => x.v);
+            }
         }
     }
 }
