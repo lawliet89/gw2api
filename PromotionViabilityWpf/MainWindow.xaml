@@ -34,7 +34,7 @@
         <ItemsControl x:Name="PromotionList" Margin="0" BorderBrush="{x:Null}" ScrollViewer.CanContentScroll="True">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel ScrollViewer.CanContentScroll="True" />
+                    <WrapPanel ScrollViewer.CanContentScroll="True" Margin="10" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.Template>

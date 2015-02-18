@@ -25,7 +25,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"
                                     Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Unit Price" Binding="{Binding Cost}" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Cost}" />
                 <controls:DataGridNumericUpDownColumn Header="Quantity"
                                                       Binding="{Binding Quantity}"
                                                       Minimum="0" />
