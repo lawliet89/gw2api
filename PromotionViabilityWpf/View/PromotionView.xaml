@@ -23,7 +23,7 @@
                    VerticalAlignment="Center" HorizontalAlignment="Right" />
         <DataGrid x:Name="Ingredients" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="100"
                   Margin="10,145,0,0" VerticalAlignment="Top" Width="279" BorderBrush="{x:Null}" BorderThickness="0"
-                  Style="{StaticResource AzureDataGrid}" CanUserResizeRows="False" Background="{x:Null}" HeadersVisibility="None" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
+                  Style="{StaticResource AzureDataGrid}" CanUserResizeRows="False" Background="{x:Null}" HeadersVisibility="None" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" ToolTip="Edit the quantity of the ingredients you currently have to reduce the cost of ingredients.">
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow" BasedOn="{StaticResource AzureDataGridRow}">
                     <EventSetter Event="MouseEnter" Handler="EnterEditMode"></EventSetter>
@@ -32,12 +32,12 @@
             </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"
-                                    Binding="{Binding Name}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Price" Binding="{Binding Cost}" IsReadOnly="True" />
+                                    Binding="{Binding Name}" IsReadOnly="True" Width="154" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Cost}" IsReadOnly="True" Width="50" />
                 <controls:DataGridNumericUpDownColumn Header="Quantity"
                                                       Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
                                                       Minimum="0" 
-                                                      HideUpDownButtons="False" />
+                                                      HideUpDownButtons="False" Width="75" ElementStyle="{DynamicResource DefaultNumericUpDown}" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Ingredients:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top" />

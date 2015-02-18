@@ -24,4 +24,25 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Fixed version of https://github.com/MahApps/MahApps.Metro/blob/master/MahApps.Metro/Controls/DataGridNumericUpDownColumn.cs -->
+    <Style TargetType="controls:NumericUpDown" x:Key="DefaultNumericUpDown">
+        <Setter Property="VerticalAlignment" Value="Top"></Setter>
+        <Setter Property="IsHitTestVisible" Value="True"></Setter>
+        <Setter Property="Focusable" Value="True"></Setter>
+        <Setter Property="HideUpDownButtons" Value="True"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="MinHeight" Value="0"></Setter>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"></Setter>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"></Setter>
+        
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
