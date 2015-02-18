@@ -25,15 +25,13 @@ namespace PromotionViabilityWpf.ViewModel
 
             Ingredients =
                 new ReactiveList<IngredientViewModel>(
-                    Promotion.Ingredients.Select(pair => new IngredientViewModel(pair.Key, pair.Value)));
+                    Promotion.Ingredients.Select(pair => new IngredientViewModel(pair.Key, pair.Value))) { ChangeTrackingEnabled = true };
 
             Cost = 0;
             var ingredientsObservables = new[]
             {
                 Ingredients.ItemChanged.Select(_ => Unit.Default),
                 Ingredients.ShouldReset.Select(_ => Unit.Default),
-                Promotion.IngredientsEntities.ItemChanged.Select(_ => Unit.Default),
-                Promotion.IngredientsEntities.ShouldReset.Select(_ => Unit.Default),
             };
             Observable.Merge(ingredientsObservables)
                 .Where(_ => Promotion.Populated)
