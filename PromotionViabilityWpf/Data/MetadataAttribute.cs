@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PromotionViabilityWpf.Model
+namespace PromotionViabilityWpf.Data
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class MetadataAttribute : Attribute
