@@ -14,7 +14,7 @@
                    Text="Promoted Name" VerticalAlignment="Center" />
         <Image x:Name="Icon" Margin="244,10,22,306" Width="32" Height="32"
                Source="/PromotionViabilityWpf;component/icon.ico" />
-        <Label Content="Quanity Yield:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"
+        <Label Content="Quantity Yield:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"
                Target="{x:Reference QuantityYield}" />
         <controls:NumericUpDown x:Name="QuantityYield" Margin="196,52,10,270" />
         <Label Content="Sales Revenue" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" />
