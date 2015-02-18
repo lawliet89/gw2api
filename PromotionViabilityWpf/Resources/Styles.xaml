@@ -24,27 +24,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style TargetType="controls:NumericUpDown" x:Key="QuantityEditor">
-        <Setter Property="VerticalAlignment">
-            <Setter.Value>Top</Setter.Value>
-        </Setter>
-        <Setter Property="BorderThickness">
-            <Setter.Value>
-                <Thickness>0</Thickness>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="VerticalContentAlignment">
-            <Setter.Value>Center</Setter.Value>
-        </Setter>
-        <Setter Property="MinHeight">
-            <Setter.Value>0</Setter.Value>
-        </Setter>
-        <Setter Property="IsHitTestVisible">
-            <Setter.Value>True</Setter.Value>
-        </Setter>
-        <Setter Property="Focusable"><Setter.Value>True</Setter.Value></Setter>
-        <Setter Property="HideUpDownButtons"><Setter.Value>False</Setter.Value></Setter>
-        <Setter Property="Background"><Setter.Value>Transparent</Setter.Value></Setter>
-    </Style>
 </ResourceDictionary>
