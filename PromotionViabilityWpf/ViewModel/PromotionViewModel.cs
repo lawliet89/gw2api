@@ -21,24 +21,28 @@ namespace PromotionViabilityWpf.ViewModel
             Promotion = promotion;
             QuantityYield = promotion.QuantityYield.Average;
 
+            this.WhenAnyValue(x => x.Promotion.Populated)
+                .ToProperty(this, x => x.Populated, out populated);
+
             ingredientsQuantities = new ReactiveList<int>(promotion.IngredientsEntities.Select(_=>  0));
 
             var ingredientsObservables = new[]
             {
-                ingredientsQuantities.ItemChanged.Select(_ => Ingredients),
-                ingredientsQuantities.ShouldReset.Select(_ => Ingredients),
-                Promotion.IngredientsEntities.ItemChanged.Select(_ => Ingredients),
-                Promotion.IngredientsEntities.ShouldReset.Select(_ => Ingredients),
+                ingredientsQuantities.ItemChanged.Select(_ => promotion.CostOfIngredients(Ingredients)),
+                ingredientsQuantities.ShouldReset.Select(_ => promotion.CostOfIngredients(Ingredients)),
+                Promotion.IngredientsEntities.ItemChanged.Select(_ => promotion.CostOfIngredients(Ingredients)),
+                Promotion.IngredientsEntities.ShouldReset.Select(_ => promotion.CostOfIngredients(Ingredients)),
             };
-            Observable.Merge(ingredientsObservables)
-                .Select(promotion.CostOfIngredients)
-                .ToProperty(this, x => x.Cost, out cost);
+            var mergedIngredientsObservables = Observable.Merge(ingredientsObservables);
 
-            Observable.Merge(ingredientsObservables)
+            mergedIngredientsObservables
                 .Subscribe(_ =>
                 {
                     this.Log().Info("Ingredients change detected");
                 });
+
+            mergedIngredientsObservables
+                .ToProperty(this, x => x.Cost, out cost);
 
             this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
                 .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice);
@@ -50,12 +54,6 @@ namespace PromotionViabilityWpf.ViewModel
             })
                 .Select(promotion.ProfitOfProduct)
                 .ToProperty(this, x => x.ProfitOfProduct, out profitOfProduct);
-            CheckPopulated();
-        }
-
-        public void CheckPopulated()
-        {
-            Populated = Promotion.Populated;
         }
 
         public string Name
@@ -87,12 +85,11 @@ namespace PromotionViabilityWpf.ViewModel
             get { return cost.Value; }
         }
 
-        private bool populated;
+        private ObservableAsPropertyHelper<bool> populated;
 
         public bool Populated
         {
-            get { return populated; }
-            private set { this.RaiseAndSetIfChanged(ref populated, value); }
+            get { return populated.Value; }
         }
 
         // ReSharper disable once FieldCanBeMadeReadOnly.Local

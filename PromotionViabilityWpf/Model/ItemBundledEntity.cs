@@ -16,9 +16,11 @@ namespace PromotionViabilityWpf.Model
             Identifier = id;
 
             this.WhenAnyValue(x => x.Listings)
+                .Where(l => l != null)
                 .Select(l => (Coin)l.BuyOffers.UnitPrice)
                 .ToProperty(this, x => x.MaxOfferUnitPrice, out maxOfferUnitPrice, 0);
             this.WhenAnyValue(x => x.Listings)
+                .Where(l => l != null)
                 .Select(l => (Coin)l.SellOffers.UnitPrice)
                 .ToProperty(this, x => x.MinSaleUnitPrice, out minSaleUnitPrice, 0);
         }

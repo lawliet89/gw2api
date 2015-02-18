@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using gw2api.Extension;
 using gw2api.Object;
 using gw2api.Request;
@@ -9,7 +10,6 @@ using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
 using ReactiveUI;
-using Splat;
 
 namespace PromotionViabilityWpf.Model
 {
@@ -38,6 +38,9 @@ namespace PromotionViabilityWpf.Model
 
             Items.Add(Promoted);
             Items.AddRange(IngredientsEntities);
+
+            Items.ItemChanged
+                .Subscribe(_ => checkPopulated());
         }
 
         public Dictionary<ItemBundledEntity, int> Ingredients
@@ -123,6 +126,13 @@ namespace PromotionViabilityWpf.Model
             return CostOfIngredients(ingredients.ToDictionary(pair => pair.Key.Identifier, pair => pair.Value));
         }
 
+        private void checkPopulated()
+        {
+            Populated = Promoted.IconPng != null && Promoted.IconPng.Length > 0
+                        && Items.All(i => i.Listings != null && i.Item != null);
+        }
+
+
         public string Name
         {
             get { return Promoted.Object.Name; }
@@ -159,14 +169,11 @@ namespace PromotionViabilityWpf.Model
             get { return Promoted.Yield(); }
         }
 
+        private bool populated; 
         public bool Populated
         {
-            get
-            {
-                return Promoted.IconPng != null && Promoted.IconPng.Length > 0
-                    && ((IBundlelable<int, Item>)this).Entities.All(e => e.Object != null)
-                       && ((IBundlelable<int, AggregateListing>)this).Entities.All(e => e.Object != null);
-            }
+            get { return populated; }
+            set { this.RaiseAndSetIfChanged(ref populated, value); }
         }
     }
 }
