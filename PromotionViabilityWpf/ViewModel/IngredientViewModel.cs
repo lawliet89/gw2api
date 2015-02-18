@@ -30,9 +30,12 @@ namespace PromotionViabilityWpf.ViewModel
             get { return cost.Value; }
         }
 
-        public IngredientViewModel(ItemBundledEntity item)
+        public int QuantityRequired { get; private set; }
+
+        public IngredientViewModel(ItemBundledEntity item, int quantityRequired)
         {
             this.item = item;
+            QuantityRequired = quantityRequired;
 
             this.WhenAnyValue(x => x.item.Item)
                 .Where(i => i != null)

@@ -25,8 +25,9 @@ namespace PromotionViabilityWpf.ViewModel
 
             Ingredients =
                 new ReactiveList<IngredientViewModel>(
-                    Promotion.IngredientsEntities.Select(i => new IngredientViewModel(i)));
+                    Promotion.Ingredients.Select(pair => new IngredientViewModel(pair.Key, pair.Value)));
 
+            Cost = 0;
             var ingredientsObservables = new[]
             {
                 Ingredients.ItemChanged.Select(_ => Unit.Default),
@@ -39,7 +40,7 @@ namespace PromotionViabilityWpf.ViewModel
                 .Subscribe(_ => Cost = promotion.CostOfIngredients(ingredientsList));
 
             this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
-                .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice);
+                .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice, 0);
 
             Observable.Merge(new[]
             {
@@ -47,7 +48,7 @@ namespace PromotionViabilityWpf.ViewModel
                 this.WhenAnyValue(x => x.PromotedMinUnitSalePrice).Select(_ => QuantityYield)
             })
                 .Select(promotion.ProfitOfProduct)
-                .ToProperty(this, x => x.RevenueOfProduct, out revenueOfProduct);
+                .ToProperty(this, x => x.RevenueOfProduct, out revenueOfProduct, 0);
 
             Observable.Merge(new[]
             {
@@ -55,7 +56,7 @@ namespace PromotionViabilityWpf.ViewModel
                 this.WhenAnyValue(x => x.RevenueOfProduct)
             })
                 .Select(_ => RevenueOfProduct - Cost)
-                .ToProperty(this, x => x.Profit, out profit);
+                .ToProperty(this, x => x.Profit, out profit, 0);
         }
 
         public string Name

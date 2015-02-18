@@ -1,5 +1,4 @@
-﻿using PromotionViabilityWpf.Extensions;
-using PromotionViabilityWpf.ViewModel;
+﻿using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.View
