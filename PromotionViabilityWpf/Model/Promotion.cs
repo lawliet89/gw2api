@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Linq;
 using gw2api.Extension;
 using gw2api.Object;
 using gw2api.Request;
@@ -13,6 +12,7 @@ using ReactiveUI;
 
 namespace PromotionViabilityWpf.Model
 {
+    [Metadata(typeof(PromotionMetadata))]
     public class Promotion : ReactiveObject,
         IBundlelable<int, Item>, 
         IBundlelable<int, AggregateListing>,
@@ -175,5 +175,14 @@ namespace PromotionViabilityWpf.Model
             get { return populated; }
             set { this.RaiseAndSetIfChanged(ref populated, value); }
         }
+    }
+
+    public struct PromotionMetadata
+    {
+        public int PromotedItemId;
+        public int UpperYield;
+        public int LowerYield;
+        public int? AverageYield;
+        public Dictionary<int, int> Ingredients;
     }
 }
