@@ -5,20 +5,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             Width="300" Height="300" Margin="0,0,10,10" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Background="White">
+             Width="300" Height="350" Margin="0,0,10,10" BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Background="White">
     <Grid Margin="0">
-        <TextBlock x:Name="PromotedName" TextWrapping="Wrap" Margin="10,10,95.2,257.2" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="Promoted Name" VerticalAlignment="Center" />
-        <Image x:Name="Icon" Margin="245,10,22.2,257.2" Width="32" Height="32" Source="/PromotionViabilityWpf;component/icon.ico"/>
-        <Label Content="Quanity Yield:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Target="{x:Reference QuantityYield}"/>
-        <controls:NumericUpDown x:Name="QuantityYield" Margin="196,47,10.2,226.2"/>
-        <Label Content="Sales Revenue" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="ProfitOfProduct" TextWrapping="Wrap" Margin="0,83,10.2,200.2" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="0g 0s 0c" VerticalAlignment="Center" HorizontalAlignment="Right" />
-        <DataGrid x:Name="Ingredients" HorizontalAlignment="Left" Height="100" Margin="10,135,0,0" VerticalAlignment="Top" Width="279" BorderBrush="{x:Null}" BorderThickness="0">
+        <TextBlock x:Name="PromotedName" TextWrapping="Wrap" Margin="10,18,95,314" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="Promoted Name" VerticalAlignment="Center" />
+        <Image x:Name="Icon" Margin="244,10,22,306" Width="32" Height="32" Source="/PromotionViabilityWpf;component/icon.ico"/>
+        <Label Content="Quanity Yield:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" Target="{x:Reference QuantityYield}"/>
+        <controls:NumericUpDown x:Name="QuantityYield" Margin="196,52,10,270"/>
+        <Label Content="Sales Revenue" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="ProfitOfProduct" TextWrapping="Wrap" Margin="0,89,10,243" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="0g 0s 0c" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        <DataGrid x:Name="Ingredients" HorizontalAlignment="Left" Height="100" Margin="10,145,0,0" VerticalAlignment="Top" Width="279" BorderBrush="{x:Null}" BorderThickness="0">
             
         </DataGrid>
-        <Label Content="Ingredients:" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top"/>
-        <Label Content="Ingredients Cost:" HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="IngredientsCost" TextWrapping="Wrap" Margin="0,245,10.2,38.2" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="0g 0s 0c" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        <Label Content="Ingredients:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top"/>
+        <Label Content="Ingredients Cost:" HorizontalAlignment="Left" Margin="10,250,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="IngredientsCost" TextWrapping="Wrap" Margin="0,255,10,77" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="0g 0s 0c" VerticalAlignment="Center" HorizontalAlignment="Right" />
+        <Label Content="Profit:" HorizontalAlignment="Left" Margin="10,281,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="Profit" TextWrapping="Wrap" Margin="0,286,10,46" Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="0g 0s 0c" VerticalAlignment="Center" HorizontalAlignment="Right" />
 
     </Grid>
 </UserControl>

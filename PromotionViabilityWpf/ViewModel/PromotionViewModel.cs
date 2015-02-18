@@ -23,18 +23,20 @@ namespace PromotionViabilityWpf.ViewModel
             this.WhenAnyValue(x => x.Promotion.Populated)
                 .ToProperty(this, x => x.Populated, out populated);
 
-            ingredientsQuantities = new ReactiveList<int>(promotion.IngredientsEntities.Select(_=>  0));
+            Ingredients =
+                new ReactiveList<IngredientViewModel>(
+                    Promotion.IngredientsEntities.Select(i => new IngredientViewModel(i)));
 
             var ingredientsObservables = new[]
             {
-                ingredientsQuantities.ItemChanged.Select(_ => Unit.Default),
-                ingredientsQuantities.ShouldReset.Select(_ => Unit.Default),
+                Ingredients.ItemChanged.Select(_ => Unit.Default),
+                Ingredients.ShouldReset.Select(_ => Unit.Default),
                 Promotion.IngredientsEntities.ItemChanged.Select(_ => Unit.Default),
                 Promotion.IngredientsEntities.ShouldReset.Select(_ => Unit.Default),
             };
             Observable.Merge(ingredientsObservables)
                 .Where(_ => Promotion.Populated)
-                .Subscribe(_ => Cost = promotion.CostOfIngredients(Ingredients));
+                .Subscribe(_ => Cost = promotion.CostOfIngredients(ingredientsList));
 
             this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
                 .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice);
@@ -45,7 +47,15 @@ namespace PromotionViabilityWpf.ViewModel
                 this.WhenAnyValue(x => x.PromotedMinUnitSalePrice).Select(_ => QuantityYield)
             })
                 .Select(promotion.ProfitOfProduct)
-                .ToProperty(this, x => x.ProfitOfProduct, out profitOfProduct);
+                .ToProperty(this, x => x.RevenueOfProduct, out revenueOfProduct);
+
+            Observable.Merge(new[]
+            {
+                this.WhenAnyValue(x => x.Cost),
+                this.WhenAnyValue(x => x.RevenueOfProduct)
+            })
+                .Select(_ => RevenueOfProduct - Cost)
+                .ToProperty(this, x => x.Profit, out profit);
         }
 
         public string Name
@@ -61,11 +71,11 @@ namespace PromotionViabilityWpf.ViewModel
             set { this.RaiseAndSetIfChanged(ref quantityYield, value); }
         }
 
-        private readonly ObservableAsPropertyHelper<Coin> profitOfProduct;
+        private readonly ObservableAsPropertyHelper<Coin> revenueOfProduct;
 
-        public Coin ProfitOfProduct
+        public Coin RevenueOfProduct
         {
-            get { return profitOfProduct.Value; }
+            get { return revenueOfProduct.Value; }
         }
 
         private Coin cost;
@@ -95,16 +105,23 @@ namespace PromotionViabilityWpf.ViewModel
             get { return Promotion.Promoted.IconPng.ToImage(); }
         }
 
-        // Due KeyValuePair not being able to report changes, we will have to create two separate lists
-        private readonly ReactiveList<int> ingredientsQuantities;
 
-        public Dictionary<ItemBundledEntity, int> Ingredients
+        public ReactiveList<IngredientViewModel> Ingredients;
+
+        private Dictionary<ItemBundledEntity, int> ingredientsList
         {
             get
             {
-                return Promotion.IngredientsEntities.Zip(ingredientsQuantities, (k, v) => new { k, v })
-                    .ToDictionary(x => x.k, x => x.v);
+                return Promotion.IngredientsEntities.Zip(Ingredients, (k, v) => new { k, v.Quantity })
+                    .ToDictionary(x => x.k, x => x.Quantity);
             }
+        }
+
+        private readonly ObservableAsPropertyHelper<Coin> profit;
+
+        public Coin Profit
+        {
+            get { return profit.Value; }
         }
     }
 }

@@ -19,10 +19,12 @@ namespace PromotionViabilityWpf.View
             this.Bind(ViewModel, vm => vm.QuantityYield, x => x.QuantityYield.Value);
             this.OneWayBind(ViewModel, vm => vm.Promotion.QuantityYield.Upper, x => x.QuantityYield.Maximum);
             this.OneWayBind(ViewModel, vm => vm.Promotion.QuantityYield.Lower, x => x.QuantityYield.Minimum);
-            this.OneWayBind(ViewModel, vm => vm.ProfitOfProduct, x => x.ProfitOfProduct.Text);
+            this.OneWayBind(ViewModel, vm => vm.RevenueOfProduct, x => x.ProfitOfProduct.Text);
 
             this.OneWayBind(ViewModel, vm => vm.Ingredients, x => x.Ingredients.ItemsSource);
             this.OneWayBind(ViewModel, vm => vm.Cost, x => x.IngredientsCost.Text);
+
+            this.OneWayBind(ViewModel, vm => vm.Profit, x => x.Profit.Text);
         }
 
         object IViewFor.ViewModel
