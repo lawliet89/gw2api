@@ -28,21 +28,14 @@ namespace PromotionViabilityWpf.ViewModel
 
             var ingredientsObservables = new[]
             {
-                ingredientsQuantities.ItemChanged.Select(_ => promotion.CostOfIngredients(Ingredients)),
-                ingredientsQuantities.ShouldReset.Select(_ => promotion.CostOfIngredients(Ingredients)),
-                Promotion.IngredientsEntities.ItemChanged.Select(_ => promotion.CostOfIngredients(Ingredients)),
-                Promotion.IngredientsEntities.ShouldReset.Select(_ => promotion.CostOfIngredients(Ingredients)),
+                ingredientsQuantities.ItemChanged.Select(_ => Unit.Default),
+                ingredientsQuantities.ShouldReset.Select(_ => Unit.Default),
+                Promotion.IngredientsEntities.ItemChanged.Select(_ => Unit.Default),
+                Promotion.IngredientsEntities.ShouldReset.Select(_ => Unit.Default),
             };
-            var mergedIngredientsObservables = Observable.Merge(ingredientsObservables);
-
-            mergedIngredientsObservables
-                .Subscribe(_ =>
-                {
-                    this.Log().Info("Ingredients change detected");
-                });
-
-            mergedIngredientsObservables
-                .ToProperty(this, x => x.Cost, out cost);
+            Observable.Merge(ingredientsObservables)
+                .Where(_ => Promotion.Populated)
+                .Subscribe(_ => Cost = promotion.CostOfIngredients(Ingredients));
 
             this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
                 .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice);
@@ -78,11 +71,12 @@ namespace PromotionViabilityWpf.ViewModel
         }
 
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private ObservableAsPropertyHelper<Coin> cost;
+        private Coin cost;
 
         public Coin Cost
         {
-            get { return cost.Value; }
+            get { return cost; }
+            private set { this.RaiseAndSetIfChanged(ref cost, value); }
         }
 
         private ObservableAsPropertyHelper<bool> populated;
