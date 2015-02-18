@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using gw2api.Extension;
+using MahApps.Metro.Controls;
+using PromotionViabilityWpf.Extensions;
 using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 using Splat;
@@ -45,5 +50,34 @@ namespace PromotionViabilityWpf.View
         }
 
         public PromotionViewModel ViewModel { get; set; }
+
+        // Credits to http://wpf.codeplex.com/wikipage?title=Single-Click%20Editing
+        private void EnterEditMode(object sender, MouseEventArgs e)
+        {
+            var row = sender as DataGridRow;
+            if (row == null) return;
+            if (row.IsEditing) return;
+
+            var cell = row.GetChildrenOfType<DataGridCell>().First(c => !c.IsReadOnly);
+
+            cell.Focus();
+            row.IsSelected = true;
+            cell.IsEditing = true;
+
+            var grid = row.FindVisualParent<DataGrid>();
+            if (grid == null) return;
+        }
+
+        private void LeaveEditMode(object sender, MouseEventArgs e)
+        {
+            var row = sender as DataGridRow;
+            if (row == null) return;
+
+            var grid = row.FindVisualParent<DataGrid>();
+            if (grid == null) return;
+
+            row.GetChildrenOfType<DataGridCell>().Where(c => c.IsEditing)
+                .ForEach(c => c.IsEditing = false);
+        }
     }
 }

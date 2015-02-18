@@ -1,13 +1,14 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                     x:Class="PromotionStyles">
 
     <Style TargetType="UserControl" x:Key="NegativePromotion">
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFD4B4B" Offset="1"/>
-                    <GradientStop Color="#FFFDD4D4" Offset="0"/>
+                    <GradientStop Color="#FFFD4B4B" Offset="1" />
+                    <GradientStop Color="#FFFDD4D4" Offset="0" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -17,10 +18,33 @@
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF43B800" Offset="1"/>
-                    <GradientStop Color="#FFCFF7D3" Offset="0"/>
+                    <GradientStop Color="#FF43B800" Offset="1" />
+                    <GradientStop Color="#FFCFF7D3" Offset="0" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="controls:NumericUpDown" x:Key="QuantityEditor">
+        <Setter Property="VerticalAlignment">
+            <Setter.Value>Top</Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness">
+            <Setter.Value>
+                <Thickness>0</Thickness>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment">
+            <Setter.Value>Center</Setter.Value>
+        </Setter>
+        <Setter Property="MinHeight">
+            <Setter.Value>0</Setter.Value>
+        </Setter>
+        <Setter Property="IsHitTestVisible">
+            <Setter.Value>True</Setter.Value>
+        </Setter>
+        <Setter Property="Focusable"><Setter.Value>True</Setter.Value></Setter>
+        <Setter Property="HideUpDownButtons"><Setter.Value>False</Setter.Value></Setter>
+        <Setter Property="Background"><Setter.Value>Transparent</Setter.Value></Setter>
     </Style>
 </ResourceDictionary>

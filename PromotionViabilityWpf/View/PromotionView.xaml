@@ -22,14 +22,22 @@
                    Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="0g 0s 0c"
                    VerticalAlignment="Center" HorizontalAlignment="Right" />
         <DataGrid x:Name="Ingredients" AutoGenerateColumns="False" HorizontalAlignment="Left" Height="100"
-                  Margin="10,145,0,0" VerticalAlignment="Top" Width="279" BorderBrush="{x:Null}" BorderThickness="0">
+                  Margin="10,145,0,0" VerticalAlignment="Top" Width="279" BorderBrush="{x:Null}" BorderThickness="0"
+                  Style="{StaticResource AzureDataGrid}" CanUserResizeRows="False" Background="{x:Null}" HeadersVisibility="None" SelectionMode="Single" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow" BasedOn="{StaticResource AzureDataGridRow}">
+                    <EventSetter Event="MouseEnter" Handler="EnterEditMode"></EventSetter>
+                    <EventSetter Event="MouseLeave" Handler="LeaveEditMode"></EventSetter>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"
                                     Binding="{Binding Name}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Price" Binding="{Binding Cost}" IsReadOnly="True" />
                 <controls:DataGridNumericUpDownColumn Header="Quantity"
-                                                      Binding="{Binding Quantity}"
-                                                      Minimum="0" />
+                                                      Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
+                                                      Minimum="0" 
+                                                      HideUpDownButtons="False" />
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Ingredients:" HorizontalAlignment="Left" Margin="10,114,0,0" VerticalAlignment="Top" />
