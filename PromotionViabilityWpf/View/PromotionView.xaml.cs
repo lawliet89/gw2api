@@ -1,12 +1,16 @@
-﻿using PromotionViabilityWpf.ViewModel;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
+using Splat;
 
 namespace PromotionViabilityWpf.View
 {
     /// <summary>
     /// Interaction logic for PromotionView.xaml
     /// </summary>
-    public partial class PromotionView : IViewFor<PromotionViewModel>
+    public partial class PromotionView : IViewFor<PromotionViewModel>, IEnableLogger
     {
         public PromotionView()
         {
@@ -24,6 +28,14 @@ namespace PromotionViabilityWpf.View
             this.OneWayBind(ViewModel, vm => vm.Cost, x => x.IngredientsCost.Text);
 
             this.OneWayBind(ViewModel, vm => vm.Profit, x => x.Profit.Text);
+
+            this.WhenAnyValue(x => x.ViewModel.Profit)
+                .Subscribe(profit =>
+                {
+                    Style = profit > 0
+                        ? (Style) FindResource("PositivePromotion")
+                        : (Style) FindResource("NegativePromotion");
+                });
         }
 
         object IViewFor.ViewModel
