@@ -8,7 +8,6 @@ using gw2api.Object;
 using PromotionViabilityWpf.Extensions;
 using PromotionViabilityWpf.Model;
 using ReactiveUI;
-using Splat;
 
 namespace PromotionViabilityWpf.ViewModel
 {
@@ -62,15 +61,13 @@ namespace PromotionViabilityWpf.ViewModel
             set { this.RaiseAndSetIfChanged(ref quantityYield, value); }
         }
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private ObservableAsPropertyHelper<Coin> profitOfProduct;
+        private readonly ObservableAsPropertyHelper<Coin> profitOfProduct;
 
         public Coin ProfitOfProduct
         {
             get { return profitOfProduct.Value; }
         }
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private Coin cost;
 
         public Coin Cost
@@ -79,15 +76,14 @@ namespace PromotionViabilityWpf.ViewModel
             private set { this.RaiseAndSetIfChanged(ref cost, value); }
         }
 
-        private ObservableAsPropertyHelper<bool> populated;
+        private readonly ObservableAsPropertyHelper<bool> populated;
 
         public bool Populated
         {
             get { return populated.Value; }
         }
 
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        private ObservableAsPropertyHelper<Coin> promotedMinUnitSalePrice;
+        private readonly ObservableAsPropertyHelper<Coin> promotedMinUnitSalePrice;
 
         public Coin PromotedMinUnitSalePrice
         {
@@ -100,7 +96,7 @@ namespace PromotionViabilityWpf.ViewModel
         }
 
         // Due KeyValuePair not being able to report changes, we will have to create two separate lists
-        private ReactiveList<int> ingredientsQuantities;
+        private readonly ReactiveList<int> ingredientsQuantities;
 
         public Dictionary<ItemBundledEntity, int> Ingredients
         {
