@@ -30,6 +30,8 @@ namespace PromotionViabilityWpf.ViewModel
             get { return loading.Value; }
         }
 
+        public ReactiveCommand<object> RefreshCommand { get; private set; }
+
         internal MainWindowViewModel()
         {
             activeTasks = new ReactiveList<Task>();
@@ -49,6 +51,12 @@ namespace PromotionViabilityWpf.ViewModel
             promotions.ShouldReset.Subscribe(_ => Reload());
 
             LoadedPromotions = promotions.CreateDerivedCollection(x => x, vm => vm.Populated);
+
+            RefreshCommand = ReactiveCommand.Create();
+            RefreshCommand.Subscribe(_ =>
+            {
+                ReloadPrices();
+            });
         }
 
         public async void Reload()

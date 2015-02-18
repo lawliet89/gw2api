@@ -13,10 +13,16 @@ namespace PromotionViabilityWpf
         public MainWindow()
         {
             InitializeComponent();
+            
+#if !DEBUG
+            BreakButton.Visibility = Visibility.Hidden;;
+#endif
 
             ViewModel = new MainWindowViewModel();
             this.OneWayBind(ViewModel, x => x.IsLoading, x => x.LoadingIndicator.Visibility);
             this.OneWayBind(ViewModel, vm => vm.LoadedPromotions, x => x.PromotionList.ItemsSource);
+
+            this.BindCommand(ViewModel, vm => vm.RefreshCommand, x => x.RefreshButton, "Click");
         }
 
         object IViewFor.ViewModel
