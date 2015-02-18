@@ -82,10 +82,12 @@ namespace PromotionViabilityWpf.ViewModel
         {
             var command = ReactiveCommand.CreateAsyncTask(async _ =>
             {
-                var task = Bundler.BundleAndSet(bundlelable);
+                var list = bundlelable as IList<IBundlelable<TKey, TValue>> ?? bundlelable.ToList();
+                var task = Bundler.Request(list);
                 activeTasks.Add(task);
-                await task;
-
+                var result = await task;
+                Bundler.Set(list, result);
+                
                 activeTasks.Remove(task);
             });
             // TODO: Handle exceptions
@@ -97,13 +99,14 @@ namespace PromotionViabilityWpf.ViewModel
         {
             var list = bundlelable as IList<IBundlelable<TKey, TValue>> ?? bundlelable.ToList();
             await Load(list);
-            var iconBundlesables = list.Cast<IBundleableRenderable<TValue>>();
+            var iconBundlesables = list.Cast<IBundleableRenderable<TValue>>().ToList();
 
             var command = ReactiveCommand.CreateAsyncTask(async _ =>
             {
-                var task = Bundler.LoadAndSetIcons(iconBundlesables);
+                var task = Bundler.LoadIcon(iconBundlesables);
                 activeTasks.Add(task);
-                await task;
+                var icons = await task;
+                Bundler.SetIcons(iconBundlesables, icons);
 
                 activeTasks.Remove(task);
             });

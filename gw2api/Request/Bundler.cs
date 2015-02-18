@@ -24,8 +24,7 @@ namespace gw2api.Request
                 .Unwrap();
         }
 
-        public static void Set<TKey, TValue>(IDictionaryRange<TKey, TValue> values,
-            IEnumerable<IBundlelable<TKey, TValue>> bundles)
+        public static void Set<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundles, IDictionaryRange<TKey, TValue> values)
         {
             bundles.SelectMany(b => b.Entities).ForEach(e => e.Object = values[e.Identifier]);
         }
@@ -35,7 +34,7 @@ namespace gw2api.Request
             var bundlelables = bundles as IList<IBundlelable<TKey, TValue>> ?? bundles.ToList();
             return Request(bundlelables).Then(task =>
             {
-                Set(task.Result, bundlelables);
+                Set(bundlelables, task.Result);
             });
         }
 
