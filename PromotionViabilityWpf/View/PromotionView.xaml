@@ -25,8 +25,8 @@
                   Margin="10,145,0,0" VerticalAlignment="Top" Width="279" BorderBrush="{x:Null}" BorderThickness="0">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name"
-                                    Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Price" Binding="{Binding Cost}" />
+                                    Binding="{Binding Name}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Cost}" IsReadOnly="True" />
                 <controls:DataGridNumericUpDownColumn Header="Quantity"
                                                       Binding="{Binding Quantity}"
                                                       Minimum="0" />
