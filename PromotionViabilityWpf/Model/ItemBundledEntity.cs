@@ -7,6 +7,7 @@ using GW2NET.Commerce;
 using GW2NET.Items;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PromotionViabilityWpf.Data;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.Model
@@ -106,13 +107,16 @@ namespace PromotionViabilityWpf.Model
             var item = value as ItemBundledEntity;
             if (item == null)
                 throw new InvalidOperationException("Tried to convert object not of type ItemBundledEntity");
-            JToken.FromObject(item.Identifier).WriteTo(writer);
+            var reference = (string) ItemIdsContext.GetLinkedValue(serializer, typeof (string), item.Identifier.ToString());
+            writer.WriteValue(reference);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var token = JToken.Load(reader);
-            var id = Convert.ToInt32(token.ToString());
+            if (reader.TokenType != JsonToken.String)
+                throw new JsonSerializationException("Item reference must be a string");
+
+            var id = (int) ItemIdsContext.GetLinkedValue(serializer, typeof (int), reader.Value.ToString());
             return new ItemBundledEntity(id);
         }
 

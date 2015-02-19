@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Windows;
 using Newtonsoft.Json;
 using PromotionViabilityWpf.Data;
@@ -27,7 +28,10 @@ namespace PromotionViabilityWpf
 
             this.BindCommand(ViewModel, vm => vm.RefreshCommand, x => x.RefreshButton, "Click");
 
-            var serializer = JsonSerializer.CreateDefault();
+            var serializer = JsonSerializer.Create(new JsonSerializerSettings()
+            {
+                Context = new StreamingContext(StreamingContextStates.All, new ItemIdsContext(ItemIds.IdsDictionary()))
+            });
             serializer.Formatting = Formatting.Indented;
             using (var streamWriter = new StreamWriter("test.json"))
             {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace PromotionViabilityWpf.Data
 {
@@ -29,12 +30,24 @@ namespace PromotionViabilityWpf.Data
         public static int PotentBlood = 24294;
         public static int PowerfulBlood = 24295;
 
+
+        public static IEnumerable<FieldInfo> StaticFields()
+        {
+            return typeof (ItemIds).GetFields()
+                .Where(f => f.IsPublic && f.IsStatic && f.FieldType == typeof (int));
+        } 
+
         public static IEnumerable<int> AllIds()
         {
-            return typeof(ItemIds).GetFields()
-                .Where(f => f.IsPublic && f.IsStatic && f.FieldType == typeof (int))
+            return StaticFields()
                 .Select(f => f.GetValue(null))
                 .OfType<int>();
         }
+
+        public static Dictionary<string, int> IdsDictionary()
+        {
+            return StaticFields()
+                .ToDictionary(f => f.Name, f => (int) f.GetValue(null));
+        } 
     }
 }
