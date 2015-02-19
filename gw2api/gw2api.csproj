@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extension\ItemExtensions.cs" />
     <Compile Include="Extension\MiscExtensions.cs" />
     <Compile Include="Extension\TaskExtensions.cs" />
     <Compile Include="Object\Coin.cs" />
