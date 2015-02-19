@@ -8,12 +8,10 @@ using GW2NET;
 using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
-using PromotionViabilityWpf.Data;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.Model
 {
-    [Metadata(typeof(PromotionMetadata))]
     public class Promotion : ReactiveObject,
         IBundlelable<int, Item>, 
         IBundlelable<int, AggregateListing>,
@@ -176,14 +174,5 @@ namespace PromotionViabilityWpf.Model
             get { return populated; }
             set { this.RaiseAndSetIfChanged(ref populated, value); }
         }
-    }
-
-    public struct PromotionMetadata
-    {
-        public int PromotedItemId;
-        public int UpperYield;
-        public int LowerYield;
-        public int? AverageYield;
-        public Dictionary<int, int> Ingredients;
     }
 }
