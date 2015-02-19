@@ -1,12 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace gw2api.Object
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Yield
     {
+        [JsonProperty]
         public int Upper { get; set; }
+        [JsonProperty]
         public int Lower { get; set; }
+        [JsonProperty("Average")]
         private int? average;
 
         public int Average

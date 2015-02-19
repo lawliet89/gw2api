@@ -8,16 +8,20 @@ using GW2NET;
 using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
+using Newtonsoft.Json;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.Model
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Promotion : ReactiveObject,
         IBundlelable<int, Item>, 
         IBundlelable<int, AggregateListing>,
         IBundleableRenderable<Item>
     {
+        [JsonProperty]
         public ItemBundledEntity Promoted { get; private set; }
+        [JsonProperty]
         public Yield QuantityYield { get; private set; }
 
         // To workaround the limitation of ReactiveUI
@@ -42,6 +46,7 @@ namespace PromotionViabilityWpf.Model
                 .Subscribe(_ => checkPopulated());
         }
 
+        [JsonProperty]
         public Dictionary<ItemBundledEntity, int> Ingredients
         {
             get
