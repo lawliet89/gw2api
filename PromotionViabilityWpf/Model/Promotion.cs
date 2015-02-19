@@ -8,6 +8,7 @@ using GW2NET;
 using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
+using PromotionViabilityWpf.Data;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.Model
