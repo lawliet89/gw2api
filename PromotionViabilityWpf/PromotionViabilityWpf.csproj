@@ -97,6 +97,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\IntegerToNullableDouble.cs" />
+    <Compile Include="Data\MetadataAttribute.cs" />
     <Compile Include="DebugLogger.cs" />
     <Compile Include="Extensions\MiscExtensions.cs" />
     <Compile Include="Model\ItemBundledEntity.cs" />
