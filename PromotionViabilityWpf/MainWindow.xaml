@@ -34,7 +34,7 @@
         <controls:FlyoutsControl>
             <controls:Flyout Header="Price Calculator" 
                              Position="Right" Width="400" 
-                             Theme="Adapt" Name="CalculatorFlyout">
+                             Theme="Accent" Name="CalculatorFlyout">
                 <view:PriceCalculator x:Name="PriceCalculatorControl"></view:PriceCalculator>
             </controls:Flyout>
         </controls:FlyoutsControl>
