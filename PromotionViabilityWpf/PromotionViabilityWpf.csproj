@@ -112,10 +112,14 @@
     <Compile Include="Extensions\MiscExtensions.cs" />
     <Compile Include="Model\ItemBundledEntity.cs" />
     <Compile Include="Model\Promotion.cs" />
+    <Compile Include="ViewModel\PriceCalculatorViewModel.cs" />
     <Compile Include="ViewModel\IngredientViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Data\Promotions.cs" />
     <Compile Include="ViewModel\PromotionViewModel.cs" />
+    <Compile Include="View\PriceCalculator.xaml.cs">
+      <DependentUpon>PriceCalculator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PromotionView.xaml.cs">
       <DependentUpon>PromotionView.xaml</DependentUpon>
     </Compile>
@@ -138,6 +142,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PriceCalculator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

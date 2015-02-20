@@ -2,6 +2,8 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:view="clr-namespace:PromotionViabilityWpf.View"
+                      xmlns:PromotionViabilityWpf="clr-namespace:PromotionViabilityWpf"
                       Title="Guild Wars 2 Promotion Viability Tool" Height="720" Width="1280" Icon="icon.ico"
                       ResizeMode="CanResizeWithGrip"
                       EnableDWMDropShadow="True"
@@ -12,6 +14,7 @@
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button x:Name="BreakButton" Cursor="Hand" Content="break" Click="DebuggerBreak"></Button>
+            <Button x:Name="CalculatorToggleButton" Cursor="Hand" Content="price calculator" Click="ShowCalculator"></Button>
             <Button x:Name="RefreshButton" Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20"
@@ -27,6 +30,15 @@
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout Header="Price Calculator" 
+                             Position="Right" Width="400" 
+                             Theme="Adapt" Name="CalculatorFlyout">
+                <view:PriceCalculator x:Name="PriceCalculatorControl"></view:PriceCalculator>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
     <Grid>
         <controls:MetroProgressBar x:Name="LoadingIndicator" IsIndeterminate="True" Margin="0" VerticalAlignment="Top"
                                    Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"

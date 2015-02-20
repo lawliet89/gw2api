@@ -9,6 +9,7 @@ using gw2api.Request;
 using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
+using PromotionViabilityWpf.Model;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.ViewModel
@@ -23,6 +24,13 @@ namespace PromotionViabilityWpf.ViewModel
         private readonly ReactiveList<PromotionViewModel> promotions;
 
         public IReactiveDerivedList<PromotionViewModel> LoadedPromotions;
+        
+        private readonly ObservableAsPropertyHelper<List<ItemBundledEntity>> loadedUniqueItems;
+
+        public List<ItemBundledEntity> LoadedUniqueItems
+        {
+            get { return loadedUniqueItems.Value; }
+        } 
 
         private readonly ObservableAsPropertyHelper<Boolean> loading; 
         public Boolean IsLoading
@@ -41,7 +49,7 @@ namespace PromotionViabilityWpf.ViewModel
                 .ToProperty(this, x => x.IsLoading, out loading);
 
             // Create list and add initial items
-            promotions = new ReactiveList<PromotionViewModel>() { ChangeTrackingEnabled = true };
+            promotions = new ReactiveList<PromotionViewModel>() {ChangeTrackingEnabled = true};
             promotions.AddRange(AvailablePromotions);
             Reload();
 
@@ -57,6 +65,11 @@ namespace PromotionViabilityWpf.ViewModel
             {
                 ReloadPrices();
             });
+
+            // See http://stackoverflow.com/questions/15254708/
+            LoadedPromotions.Changed.Select(_ => Unit.Default).StartWith(Unit.Default)
+                .Select(_ => LoadedPromotions.SelectMany(p => p.Promotion.Items).Distinct().ToList())
+                .ToProperty(this, x => x.LoadedUniqueItems, out loadedUniqueItems);
         }
 
         #region Methods that must be invoked on the UI Thread/Context

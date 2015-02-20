@@ -23,6 +23,8 @@ namespace PromotionViabilityWpf
             this.OneWayBind(ViewModel, vm => vm.LoadedPromotions, x => x.PromotionList.ItemsSource);
 
             this.BindCommand(ViewModel, vm => vm.RefreshCommand, x => x.RefreshButton, "Click");
+
+            this.OneWayBind(ViewModel, vm => vm.LoadedUniqueItems, x => x.PriceCalculatorControl.Items);
         }
 
         object IViewFor.ViewModel
@@ -39,6 +41,11 @@ namespace PromotionViabilityWpf
             {
                 Debugger.Break();
             }
+        }
+
+        private void ShowCalculator(object sender, RoutedEventArgs e)
+        {
+            CalculatorFlyout.IsOpen = !CalculatorFlyout.IsOpen;
         }
     }
 }
