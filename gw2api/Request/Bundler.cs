@@ -20,8 +20,7 @@ namespace gw2api.Request
             var service = bundlelables.First().Service;
 
             // It seems like starting an async operation is slow. Wrap it in another task
-            return Task.Factory.StartNew(() => service.FindAllAsync(keys.ToList()))
-                .Unwrap();
+            return Task.Run(() => service.FindAllAsync(keys.ToList()));
         }
 
         public static void Set<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundles, IDictionaryRange<TKey, TValue> values)
@@ -41,7 +40,7 @@ namespace gw2api.Request
         public static Task<Dictionary<T, byte[]>> LoadIcon<T>(IEnumerable<IBundleableRenderable<T>> bundleables)
             where T : IRenderable
         {
-            return Task.Factory.StartNew(() =>
+            return Task.Run(() =>
             {
                 return bundleables.SelectMany(b => b.Renderables)
                     .Distinct()
