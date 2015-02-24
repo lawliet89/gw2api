@@ -59,7 +59,7 @@ namespace PromotionViabilityWpf.ViewModel
             });
         }
 
-        #region Method that must be invoked on the UI Thread/Context
+        #region Methods that must be invoked on the UI Thread/Context
         private async void Reload()
         {
             var allPromotions = promotions.Select(p => p.Promotion).ToList();
@@ -114,7 +114,7 @@ namespace PromotionViabilityWpf.ViewModel
                 activeTasks.Remove(task);
             });
 
-            await Load(list).ConfigureAwait(false);
+            await Load(list);
             // TODO: Handle exceptions
             return await command.ExecuteAsyncTask()
                 .ConfigureAwait(false);
