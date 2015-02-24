@@ -59,7 +59,8 @@ namespace PromotionViabilityWpf.ViewModel
             });
         }
 
-        public async void Reload()
+        #region Method that must be invoked on the UI Thread/Context
+        private async void Reload()
         {
             var allPromotions = promotions.Select(p => p.Promotion).ToList();
             await Task.WhenAll(LoadWithICons<int, Item>(allPromotions), 
@@ -67,7 +68,7 @@ namespace PromotionViabilityWpf.ViewModel
                 .ConfigureAwait(false);
         }
 
-        public async void ReloadPrices()
+        private async void ReloadPrices()
         {
             await Load<int, AggregateListing>(promotions.Select(p => p.Promotion))
                 .ConfigureAwait(false);
@@ -94,7 +95,8 @@ namespace PromotionViabilityWpf.ViewModel
                 activeTasks.Remove(task);
             });
             // TODO: Handle exceptions
-            return await command.ExecuteAsyncTask();
+            return await command.ExecuteAsyncTask()
+                .ConfigureAwait(false);
         }
 
         private async Task<Unit> LoadWithICons<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundlelable)
@@ -102,8 +104,6 @@ namespace PromotionViabilityWpf.ViewModel
         {
             var list = bundlelable as IList<IBundlelable<TKey, TValue>> ?? bundlelable.ToList();
             var iconBundlesables = list.Cast<IBundleableRenderable<TValue>>().ToList();
-            await Load(list);
-
             var command = ReactiveCommand.CreateAsyncTask(async _ =>
             {
                 var task = Bundler.LoadIcon(iconBundlesables);
@@ -113,8 +113,12 @@ namespace PromotionViabilityWpf.ViewModel
 
                 activeTasks.Remove(task);
             });
+
+            await Load(list).ConfigureAwait(false);
             // TODO: Handle exceptions
-            return await command.ExecuteAsyncTask();
+            return await command.ExecuteAsyncTask()
+                .ConfigureAwait(false);
         }
+        #endregion
     }
 }
