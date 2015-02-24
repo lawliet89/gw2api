@@ -59,26 +59,30 @@ namespace PromotionViabilityWpf.ViewModel
             });
         }
 
-        public async void Reload()
+        #region Method that must be invoked on the UI Thread/Context
+        private async void Reload()
         {
             var allPromotions = promotions.Select(p => p.Promotion).ToList();
-            await LoadWithICons<int, Item>(allPromotions);
-            await Load<int, AggregateListing>(allPromotions);
+            await Task.WhenAll(LoadWithICons<int, Item>(allPromotions), 
+                Load<int, AggregateListing>(allPromotions))
+                .ConfigureAwait(false);
         }
 
-        public async void ReloadPrices()
+        private async void ReloadPrices()
         {
-            await Load<int, AggregateListing>(promotions.Select(p => p.Promotion));
+            await Load<int, AggregateListing>(promotions.Select(p => p.Promotion))
+                .ConfigureAwait(false);
         }
 
         private async void Load(PromotionViewModel vm)
         {
             var promotion = vm.Promotion.Yield().ToList();
-            await LoadWithICons<int, Item>(promotion);
-            await Load<int, AggregateListing>(promotion);
+            await Task.WhenAll(LoadWithICons<int, Item>(promotion), 
+                Load<int, AggregateListing>(promotion))
+                .ConfigureAwait(false);
         }
 
-        private Task<Unit> Load<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundlelable)
+        private async Task<Unit> Load<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundlelable)
         {
             var command = ReactiveCommand.CreateAsyncTask(async _ =>
             {
@@ -91,16 +95,15 @@ namespace PromotionViabilityWpf.ViewModel
                 activeTasks.Remove(task);
             });
             // TODO: Handle exceptions
-            return command.ExecuteAsyncTask();
+            return await command.ExecuteAsyncTask()
+                .ConfigureAwait(false);
         }
 
-        private async Task<Task<Unit>> LoadWithICons<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundlelable)
+        private async Task<Unit> LoadWithICons<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundlelable)
             where TValue : IRenderable
         {
             var list = bundlelable as IList<IBundlelable<TKey, TValue>> ?? bundlelable.ToList();
-            await Load(list);
             var iconBundlesables = list.Cast<IBundleableRenderable<TValue>>().ToList();
-
             var command = ReactiveCommand.CreateAsyncTask(async _ =>
             {
                 var task = Bundler.LoadIcon(iconBundlesables);
@@ -110,8 +113,12 @@ namespace PromotionViabilityWpf.ViewModel
 
                 activeTasks.Remove(task);
             });
+
+            await Load(list).ConfigureAwait(false);
             // TODO: Handle exceptions
-            return command.ExecuteAsyncTask();
+            return await command.ExecuteAsyncTask()
+                .ConfigureAwait(false);
         }
+        #endregion
     }
 }
