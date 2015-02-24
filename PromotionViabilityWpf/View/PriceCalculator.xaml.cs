@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using PromotionViabilityWpf.Data;
 using PromotionViabilityWpf.Model;
 using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
@@ -14,20 +12,21 @@ namespace PromotionViabilityWpf.View
     /// </summary>
     public partial class PriceCalculator : IViewFor<PriceCalculatorViewModel>
     {
-        public IEnumerable<ItemBundledEntity> Items { get; set; }
+        public static readonly DependencyProperty ItemsListProperty = DependencyProperty.Register("ItemsList",
+            typeof(List<ItemBundledEntity>), typeof(PriceCalculator));
+
+        public List<ItemBundledEntity> ItemsList
+        {
+            get { return (List<ItemBundledEntity>)GetValue(ItemsListProperty); }
+            set {  SetValue(ItemsListProperty, value);}
+        }
 
         public PriceCalculator()
         {
             InitializeComponent();
-        }
+            ViewModel = new PriceCalculatorViewModel();
 
-        public override void BeginInit()
-        {
-        }
-
-        public override void EndInit()
-        {
-            ViewModel = new PriceCalculatorViewModel(Items);
+            this.Bind(ViewModel, vm => vm.Items, x => x.ItemsList);
             this.OneWayBind(ViewModel, vm => vm.Items, x => x.ItemList.ItemsSource, l => l.Select(i => i.Item.Name));
         }
 
