@@ -5,19 +5,28 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using gw2api.Extension;
+using gw2api.Model;
+using gw2api.Object;
 using gw2api.Request;
 using GW2NET.Commerce;
 using GW2NET.Common;
 using GW2NET.Items;
-using PromotionViabilityWpf.Model;
 using ReactiveUI;
+using Splat;
 
 namespace PromotionViabilityWpf.ViewModel
 {
     public class MainWindowViewModel : ReactiveObject
     {
-        private static readonly IEnumerable<PromotionViewModel> AvailablePromotions = 
-            Data.Promotions.FineMaterialsTier6Promotions.Select(x => new PromotionViewModel(x));
+        private IEnumerable<PromotionViewModel> availablePromotions
+        {
+            get
+            {
+                return
+                    Locator.Current.GetService<IObjectRepository<int, Promotion>>()
+                        .All.Select(x => new PromotionViewModel(x));
+            }
+        }
 
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private ReactiveList<Task> activeTasks;
@@ -49,8 +58,8 @@ namespace PromotionViabilityWpf.ViewModel
                 .ToProperty(this, x => x.IsLoading, out loading);
 
             // Create list and add initial items
-            promotions = new ReactiveList<PromotionViewModel>() {ChangeTrackingEnabled = true};
-            promotions.AddRange(AvailablePromotions);
+            promotions = new ReactiveList<PromotionViewModel>() { ChangeTrackingEnabled = true };
+            promotions.AddRange(availablePromotions);
             Reload();
 
             // Set up behaviours

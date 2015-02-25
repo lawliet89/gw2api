@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using PromotionViabilityWpf.Model;
+using gw2api.Model;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.ViewModel

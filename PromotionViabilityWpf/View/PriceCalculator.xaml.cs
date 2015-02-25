@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using PromotionViabilityWpf.Model;
+using gw2api.Model;
 using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 

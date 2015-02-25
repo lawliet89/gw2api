@@ -4,14 +4,22 @@ using GW2NET.Commerce;
 using GW2NET.Items;
 using ReactiveUI;
 
-namespace PromotionViabilityWpf.Model
+namespace gw2api.Model
 {
     public class ItemBundledEntity : ReactiveObject,
         IBundledEntity<int, Item>, 
         IBundledEntity<int, AggregateListing>,
         IBundleableRenderableEntity<Item>
     {
-        public ItemBundledEntity(int id)
+        public static readonly IObjectRepository<int, ItemBundledEntity> Repository =
+            new ObjectRepository<int, ItemBundledEntity>(); 
+
+        public static ItemBundledEntity CreateOrGet(int id)
+        {
+            return Repository.GetOrAddItem(id, identifier => new ItemBundledEntity(identifier));
+        }
+
+        private ItemBundledEntity(int id)
         {
             Identifier = id;
 

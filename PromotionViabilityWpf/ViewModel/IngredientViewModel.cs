@@ -1,6 +1,6 @@
 ﻿using System.Reactive.Linq;
+using gw2api.Model;
 using gw2api.Object;
-using PromotionViabilityWpf.Model;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.ViewModel
