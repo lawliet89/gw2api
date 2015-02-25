@@ -6,10 +6,11 @@ namespace PromotionViabilityWpf.ViewModel
 {
     public class PriceCalculatorViewModel : ReactiveObject
     {
-        public List<ItemBundledEntity> Items { get; set; }
+        public List<ItemBundledEntity> Items { get; private set; }
 
         public PriceCalculatorViewModel()
         {
+            Items = new List<ItemBundledEntity>();
         }
     }
 }

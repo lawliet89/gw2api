@@ -34,13 +34,6 @@ namespace PromotionViabilityWpf.ViewModel
 
         public IReactiveDerivedList<PromotionViewModel> LoadedPromotions;
         
-        private readonly ObservableAsPropertyHelper<List<ItemBundledEntity>> loadedUniqueItems;
-
-        public List<ItemBundledEntity> LoadedUniqueItems
-        {
-            get { return loadedUniqueItems.Value; }
-        } 
-
         private readonly ObservableAsPropertyHelper<Boolean> loading; 
         public Boolean IsLoading
         {
@@ -74,11 +67,6 @@ namespace PromotionViabilityWpf.ViewModel
             {
                 ReloadPrices();
             });
-
-            // See http://stackoverflow.com/questions/15254708/
-            LoadedPromotions.Changed.Select(_ => Unit.Default).StartWith(Unit.Default)
-                .Select(_ => LoadedPromotions.SelectMany(p => p.Promotion.Items).Distinct().ToList())
-                .ToProperty(this, x => x.LoadedUniqueItems, out loadedUniqueItems);
         }
 
         #region Methods that must be invoked on the UI Thread/Context
