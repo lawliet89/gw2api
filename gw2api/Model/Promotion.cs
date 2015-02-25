@@ -13,7 +13,8 @@ namespace gw2api.Model
     public class Promotion : ReactiveObject,
         IBundlelable<int, Item>, 
         IBundlelable<int, AggregateListing>,
-        IBundleableRenderable<Item>
+        IBundleableRenderable<Item>,
+        IHasIdentifier<int>
     {
         public ItemBundledEntity Promoted { get; private set; }
         public Yield QuantityYield { get; private set; }
@@ -160,6 +161,23 @@ namespace gw2api.Model
         {
             get { return populated; }
             set { this.RaiseAndSetIfChanged(ref populated, value); }
+        }
+
+        // For now, we are going to simplify things and make the Promoted Item be the Promotion model ID
+        // We might want to support multiple recipes for the same Promoted item in the future
+        public int Identifier
+        {
+            get { return Promoted.Identifier; }
+        }
+    }
+
+    public class PromotionObjectRepository : ObjectRepository<int, Promotion>
+    {
+        public static readonly PromotionObjectRepository Instance = new PromotionObjectRepository();
+
+        private PromotionObjectRepository()
+        {
+            
         }
     }
 }
