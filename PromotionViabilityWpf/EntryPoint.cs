@@ -22,7 +22,10 @@ namespace PromotionViabilityWpf
             Locator.CurrentMutable.RegisterConstant(GW2.V2.Items.ForCurrentCulture(), typeof(IRepository<int, Item>));
             Locator.CurrentMutable.RegisterConstant(GW2.V2.Commerce.Prices, typeof(IRepository<int, AggregateListing>));
             Locator.CurrentMutable.RegisterConstant(GW2.Rendering.RenderService, typeof(IRenderService));
+
             Locator.CurrentMutable.Register(() => new PromotionView(), typeof(IViewFor<PromotionViewModel>));
+            Locator.CurrentMutable.Register(() => new PriceCalculatorListItemView(), typeof(IViewFor<PriceCalculatorListItemViewModel>));
+
             Locator.CurrentMutable.RegisterConstant(new IntegerToNullableDouble(), typeof(IBindingTypeConverter));
             Locator.CurrentMutable.RegisterConstant(new DebugLogger(), typeof(ILogger));
 

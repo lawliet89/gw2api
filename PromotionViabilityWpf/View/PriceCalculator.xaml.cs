@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using gw2api.Model;
-using PromotionViabilityWpf.ViewModel;
+﻿using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.View
@@ -17,7 +13,7 @@ namespace PromotionViabilityWpf.View
             InitializeComponent();
             ViewModel = new PriceCalculatorViewModel();
 
-            this.OneWayBind(ViewModel, vm => vm.Items, x => x.ItemComboBox.ItemsSource, l => l.Select(i => i.Item.Name));
+            this.OneWayBind(ViewModel, vm => vm.ItemsListViewModel, x => x.ItemComboBox.ItemsSource);
         }
 
         object IViewFor.ViewModel

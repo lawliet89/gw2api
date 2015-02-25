@@ -94,5 +94,10 @@ namespace gw2api.Model
             set { IconPng = value; }
         }
         #endregion
+
+        public override string ToString()
+        {
+            return Item.Name;
+        }
     }
 }
