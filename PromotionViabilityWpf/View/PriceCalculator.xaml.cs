@@ -1,4 +1,5 @@
-﻿using PromotionViabilityWpf.ViewModel;
+﻿using PromotionViabilityWpf.Extensions;
+using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;
 
 namespace PromotionViabilityWpf.View
@@ -14,6 +15,9 @@ namespace PromotionViabilityWpf.View
             ViewModel = new PriceCalculatorViewModel();
 
             this.OneWayBind(ViewModel, vm => vm.Items, x => x.ItemComboBox.ItemsSource);
+            this.Bind(ViewModel, vm => vm.SelectedItem, x => x.ItemComboBox.SelectedItem);
+
+            this.OneWayBind(ViewModel, vm => vm.SelectedIcon, x => x.Icon.Source);
         }
 
         object IViewFor.ViewModel

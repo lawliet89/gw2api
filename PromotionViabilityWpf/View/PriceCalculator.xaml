@@ -1,13 +1,16 @@
 ﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:PromotionViabilityWpf="clr-namespace:PromotionViabilityWpf" x:Class="PromotionViabilityWpf.View.PriceCalculator" 
-             mc:Ignorable="d" 
-             d:DesignHeight="800" 
-             Width="400" Background="White">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    x:Class="PromotionViabilityWpf.View.PriceCalculator"
+    mc:Ignorable="d"
+    d:DesignHeight="800"
+    Width="400" Background="White">
     <Grid>
-        <ComboBox x:Name="ItemComboBox" HorizontalAlignment="Left" Height="22" Margin="10,20,0,0" VerticalAlignment="Top" Width="291" SelectedIndex="0" DisplayMemberPath="Item.Name" />
+        <ComboBox x:Name="ItemComboBox" HorizontalAlignment="Left" Height="32" Margin="10,14,0,0"
+                  VerticalAlignment="Top" Width="343" SelectedIndex="0" DisplayMemberPath="Item.Name" />
+        <Image x:Name="Icon" Margin="358,14,10,754" Width="32" Height="32"
+        	Source="/PromotionViabilityWpf;component/icon.ico" />
     </Grid>
 </UserControl>
