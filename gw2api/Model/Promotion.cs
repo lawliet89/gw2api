@@ -145,8 +145,8 @@ namespace gw2api.Model
 
         private void checkPopulated()
         {
-            Populated = Promoted.IconPng != null && Promoted.IconPng.Length > 0
-                        && Items.All(i => i.Listings != null && i.Item != null);
+            Populated = Items.All(i => i.IconPng != null && i.IconPng.Length > 0 
+                && i.Listings != null && i.Item != null);
         }
 
 
@@ -172,7 +172,7 @@ namespace gw2api.Model
 
         public IEnumerable<IBundleableRenderableEntity<Item>> Renderables
         {
-            get { return Promoted.Yield(); }
+            get { return Items; }
         }
 
         private bool populated; 
