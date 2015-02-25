@@ -1,8 +1,14 @@
 ﻿namespace gw2api.Object
 {
-    public interface IBundledEntity<out TKey, TValue>
+    public interface IBundledEntity
     {
-        TValue Object { get; set; }
-        TKey Identifier { get; }
+        object Object { get; set; }
+        object Identifier { get; }
+    }
+
+    public interface IBundledEntity<out TKey, TValue> : IBundledEntity
+    {
+        new TValue Object { get; set; }
+        new TKey Identifier { get; }
     }
 }
