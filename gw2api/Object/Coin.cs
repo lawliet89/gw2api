@@ -59,6 +59,22 @@ namespace gw2api.Object
             return sb.ToString();
         }
 
+        public override bool Equals(object obj)
+        {
+            var coin = obj as Coin;
+            return coin != null && Equals(coin);
+        }
+
+        protected bool Equals(Coin other)
+        {
+            return Raw == other.Raw;
+        }
+
+        public override int GetHashCode()
+        {
+            return Raw;
+        }
+
         public static implicit operator int(Coin obj)
         {
             return obj.Raw;
