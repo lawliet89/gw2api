@@ -125,17 +125,6 @@ namespace gw2api.Object
             return a.Raw >= b.Raw;
         }
 
-        public static bool operator ==(Coin a, Coin b)
-        {
-            if (a == null || b == null) return false;
-            return a.Equals(b);
-        }
-
-        public static bool operator !=(Coin a, Coin b)
-        {
-            return !(a == b);
-        }
-
         public int CompareTo(Coin other)
         {
             return Raw.CompareTo(other.Raw);
