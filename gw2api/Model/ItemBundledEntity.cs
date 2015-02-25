@@ -68,18 +68,10 @@ namespace gw2api.Model
             set { Item = value; }
         }
 
-        object IBundledEntity.Identifier { get { return Identifier; } }
-
         AggregateListing IBundledEntity<int, AggregateListing>.Object
         {
             get { return Listings; }
             set { Listings = value; }
-        }
-
-        object IBundledEntity.Object
-        {
-            get { return Item; }
-            set { Object = (Item) value; }
         }
 
         public int Identifier { get; private set; }
