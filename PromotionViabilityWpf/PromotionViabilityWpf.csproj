@@ -110,8 +110,6 @@
     <Compile Include="Converter\IntegerToNullableDouble.cs" />
     <Compile Include="DebugLogger.cs" />
     <Compile Include="Extensions\MiscExtensions.cs" />
-    <Compile Include="Model\ItemBundledEntity.cs" />
-    <Compile Include="Model\Promotion.cs" />
     <Compile Include="ViewModel\IngredientViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="Data\Promotions.cs" />

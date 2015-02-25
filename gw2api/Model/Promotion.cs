@@ -8,7 +8,7 @@ using GW2NET.Commerce;
 using GW2NET.Items;
 using ReactiveUI;
 
-namespace PromotionViabilityWpf.Model
+namespace gw2api.Model
 {
     public class Promotion : ReactiveObject,
         IBundlelable<int, Item>, 

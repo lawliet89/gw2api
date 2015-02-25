@@ -4,7 +4,7 @@ using GW2NET.Commerce;
 using GW2NET.Items;
 using ReactiveUI;
 
-namespace PromotionViabilityWpf.Model
+namespace gw2api.Model
 {
     public class ItemBundledEntity : ReactiveObject,
         IBundledEntity<int, Item>, 
