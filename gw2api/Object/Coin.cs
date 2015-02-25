@@ -3,7 +3,7 @@ using System.Text;
 
 namespace gw2api.Object
 {
-    public class Coin
+    public class Coin : IEquatable<Coin>, IComparable<Coin>
     {
         public static double SalesTax = 0.15;
         public int Raw { get; private set; }
@@ -59,6 +59,22 @@ namespace gw2api.Object
             return sb.ToString();
         }
 
+        public override bool Equals(object obj)
+        {
+            var coin = obj as Coin;
+            return coin != null && Equals(coin);
+        }
+
+        public bool Equals(Coin other)
+        {
+            return other != null && Raw == other.Raw;
+        }
+
+        public override int GetHashCode()
+        {
+            return Raw;
+        }
+
         public static implicit operator int(Coin obj)
         {
             return obj.Raw;
@@ -97,6 +113,21 @@ namespace gw2api.Object
         public static bool operator >(Coin a, Coin b)
         {
             return a.Raw > b.Raw;
+        }
+
+        public static bool operator <=(Coin a, Coin b)
+        {
+            return a.Raw <= b.Raw;
+        }
+
+        public static bool operator >=(Coin a, Coin b)
+        {
+            return a.Raw >= b.Raw;
+        }
+
+        public int CompareTo(Coin other)
+        {
+            return Raw.CompareTo(other.Raw);
         }
 
         public static Coin ProfitSellingAt(Coin price)
