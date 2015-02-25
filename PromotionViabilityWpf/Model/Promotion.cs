@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive.Linq;
 using gw2api.Extension;
 using gw2api.Object;
 using gw2api.Request;
-using GW2NET;
 using GW2NET.Commerce;
-using GW2NET.Common;
 using GW2NET.Items;
 using ReactiveUI;
 
@@ -149,17 +146,6 @@ namespace PromotionViabilityWpf.Model
         {
             get { return Items; }
         }
-
-        IRepository<int, AggregateListing> IBundlelable<int, AggregateListing>.Service
-        {
-            get { return GW2.V2.Commerce.Prices; }
-        }
-
-        public IRepository<int, Item> Service
-        {
-            get { return GW2.V2.Items.ForCurrentCulture(); }
-        }
-
         #endregion
 
         public ReactiveList<ItemBundledEntity> Items { get; private set; }
