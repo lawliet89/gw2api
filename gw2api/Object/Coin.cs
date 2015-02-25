@@ -3,7 +3,7 @@ using System.Text;
 
 namespace gw2api.Object
 {
-    public class Coin
+    public class Coin : IEquatable<Coin>
     {
         public static double SalesTax = 0.15;
         public int Raw { get; private set; }
@@ -65,7 +65,7 @@ namespace gw2api.Object
             return coin != null && Equals(coin);
         }
 
-        protected bool Equals(Coin other)
+        public bool Equals(Coin other)
         {
             return Raw == other.Raw;
         }
