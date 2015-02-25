@@ -9,7 +9,6 @@ namespace PromotionViabilityWpf.ViewModel
     public class PriceCalculatorViewModel : ReactiveObject
     {
         public readonly IReactiveDerivedList<ItemBundledEntity> Items;
-        public readonly IReactiveDerivedList<PriceCalculatorListItemViewModel> ItemsListViewModel; 
         private readonly ReactiveList<ItemBundledEntity> availableItems; 
 
         public PriceCalculatorViewModel()
@@ -35,7 +34,6 @@ namespace PromotionViabilityWpf.ViewModel
                 });
 
             Items = availableItems.CreateDerivedCollection(i => i, i => i.Item != null);
-            ItemsListViewModel = Items.CreateDerivedCollection(i => new PriceCalculatorListItemViewModel(i));
         }
     }
 }

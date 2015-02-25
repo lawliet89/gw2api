@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using gw2api.Extension;
-using MahApps.Metro.Controls;
 using PromotionViabilityWpf.Extensions;
 using PromotionViabilityWpf.ViewModel;
 using ReactiveUI;

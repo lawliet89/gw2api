@@ -13,7 +13,7 @@ namespace PromotionViabilityWpf.View
             InitializeComponent();
             ViewModel = new PriceCalculatorViewModel();
 
-            this.OneWayBind(ViewModel, vm => vm.ItemsListViewModel, x => x.ItemComboBox.ItemsSource);
+            this.OneWayBind(ViewModel, vm => vm.Items, x => x.ItemComboBox.ItemsSource);
         }
 
         object IViewFor.ViewModel
