@@ -2,22 +2,21 @@
 using System.Linq;
 using System.Threading.Tasks;
 using gw2api.Extension;
-using GW2NET;
 using GW2NET.Common;
+using Splat;
 
 namespace gw2api.Request
 {
     public static class Bundler
     {
         public static string IconFormat = "png";
-        public static IRenderService IconService = GW2.Rendering.RenderService;
 
         public static Task<IDictionaryRange<TKey, TValue>> Request<TKey, TValue>(IEnumerable<IBundlelable<TKey, TValue>> bundles)
         {
             var bundlelables = bundles as IList<IBundlelable<TKey, TValue>> ?? bundles.ToList();
             var keys = bundlelables.SelectMany(b => b.Entities)
                 .Select(e => e.Identifier);
-            var service = bundlelables.First().Service;
+            var service = Locator.Current.GetService<IRepository<TKey, TValue>>();
 
             // It seems like starting an async operation is slow. Wrap it in another task
             return Task.Run(() => service.FindAllAsync(keys.ToList()));
@@ -42,9 +41,10 @@ namespace gw2api.Request
         {
             return Task.Run(() =>
             {
+                var iconService = Locator.Current.GetService<IRenderService>();
                 return bundleables.SelectMany(b => b.Renderables)
                     .Distinct()
-                    .ToDictionary(r => r.Renderable, r => IconService.GetImage(r.Renderable, IconFormat));
+                    .ToDictionary(r => r.Renderable, r => iconService.GetImage(r.Renderable, IconFormat));
             });
         }
 

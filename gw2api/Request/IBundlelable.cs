@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using gw2api.Object;
-using GW2NET.Common;
 
 namespace gw2api.Request
 {
@@ -10,9 +8,8 @@ namespace gw2api.Request
     /// <typeparam name="TKey">The identifier type related to the service</typeparam>
     /// <typeparam name="TValue">Type of objects returned by service</typeparam>
     /// </summary>
-    public interface IBundlelable<TKey, TValue>
+    public interface IBundlelable<out TKey, TValue>
     {
         IEnumerable<IBundledEntity<TKey, TValue>> Entities { get; }
-        IRepository<TKey, TValue> Service { get; }
     }
 }
