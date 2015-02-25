@@ -84,8 +84,9 @@
     <Compile Include="Object\Coin.cs" />
     <Compile Include="Object\IBundleableRenderableEntity.cs" />
     <Compile Include="Object\BundledEntity.cs" />
-    <Compile Include="Object\ICache.cs" />
+    <Compile Include="Object\IObjectRepository.cs" />
     <Compile Include="Object\IHasIdentifier.cs" />
+    <Compile Include="Object\ObjectRepository.cs" />
     <Compile Include="Object\Yield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\Bundler.cs" />
