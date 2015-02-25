@@ -16,6 +16,9 @@ namespace gw2api.Model
         IBundleableRenderable<Item>,
         IHasIdentifier<int>
     {
+
+        public static readonly IObjectRepository<int, Promotion> Repository = new ObjectRepository<int, Promotion>();
+
         public ItemBundledEntity Promoted { get; private set; }
         public Yield QuantityYield { get; private set; }
 
@@ -23,7 +26,23 @@ namespace gw2api.Model
         public List<int> IngredientsQuantity { get; private set; }
         public ReactiveList<ItemBundledEntity> IngredientsEntities { get; private set; }
 
-        public Promotion(ItemBundledEntity promoted, Dictionary<ItemBundledEntity, int> ingredients, Yield quantityYield)
+        public static Promotion Get(int id)
+        {
+            return Repository.GetItem(id);
+        }
+
+        public static Promotion Get(ItemBundledEntity promoted)
+        {
+            return Get(promoted.Identifier);
+        }
+
+        public static Promotion GetOrCreate(ItemBundledEntity promoted, Dictionary<ItemBundledEntity, int> ingredients,
+            Yield quantityYield)
+        {
+            return Repository.GetOrAddItem(promoted.Identifier, _ => new Promotion(promoted, ingredients, quantityYield));
+        }
+
+        private Promotion(ItemBundledEntity promoted, Dictionary<ItemBundledEntity, int> ingredients, Yield quantityYield)
         {
             Promoted = promoted;
             QuantityYield = quantityYield;
@@ -168,16 +187,6 @@ namespace gw2api.Model
         public int Identifier
         {
             get { return Promoted.Identifier; }
-        }
-    }
-
-    public class PromotionObjectRepository : ObjectRepository<int, Promotion>
-    {
-        public static readonly PromotionObjectRepository Instance = new PromotionObjectRepository();
-
-        private PromotionObjectRepository()
-        {
-            
         }
     }
 }

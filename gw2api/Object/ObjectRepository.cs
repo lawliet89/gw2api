@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Reactive;
@@ -108,14 +109,41 @@ namespace gw2api.Object
             }
         }
 
-        public TValue GetOrAddItem(TKey key, TValue addedValue)
+        public TValue GetOrAddItem(TKey key, Func<TKey, TValue> factory)
         {
             lock (cacheListMutex)
             {
                 var item = GetItem(key);
                 if (item != null) return item;
+                var addedValue = factory(key);
                 cacheList.Add(addedValue);
                 return addedValue;
+            }
+        }
+
+
+        public void AddRange(IEnumerable<TValue> range)
+        {
+            lock (cacheListMutex)
+            {
+                var rangeList = range as IList<TValue> ?? range.ToList();
+                var keys = rangeList.Select(v => v.Identifier);
+                if (cacheList.Select(v => v.Identifier).Intersect(keys).Any())
+                {
+                    throw new InvalidOperationException("Duplicate keys to add to repository");
+                }
+                cacheList.AddRange(rangeList);
+            }
+        }
+
+        public List<TValue> All
+        {
+            get
+            {
+                lock (cacheListMutex)
+                {
+                    return cacheList.ToList();
+                }
             }
         }
     }
