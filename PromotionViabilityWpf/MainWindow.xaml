@@ -35,7 +35,7 @@
             <controls:Flyout Header="Price Calculator" 
                              Position="Right" Width="300" 
                              Theme="Accent" Name="CalculatorFlyout">
-                <view:PriceCalculator x:Name="PriceCalculatorControl"></view:PriceCalculator>
+                <view:PriceCalculator x:Name="PriceCalculatorControl" Foreground="White"></view:PriceCalculator>
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
