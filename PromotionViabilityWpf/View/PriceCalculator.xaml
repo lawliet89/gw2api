@@ -15,8 +15,8 @@
         </Style>
     </UserControl.Resources>
     <Grid Width="300">
-        <ComboBox x:Name="ItemComboBox" HorizontalAlignment="Left" Height="32" Margin="10,14,0,0"
-			VerticalAlignment="Top" Width="216" DisplayMemberPath="Item.Name" />
+        <controls:SplitButton x:Name="ItemComboBox" HorizontalAlignment="Left" Height="32" Margin="10,14,0,0"
+			VerticalAlignment="Top" Width="216" DisplayMemberPath="Item.Name" VerticalContentAlignment="Center" Padding="5,0,0,0" SelectedIndex="-1" />
         <Image x:Name="Icon" Margin="0,14,20,0" Width="32" Height="32"
 			Source="/PromotionViabilityWpf;component/icon.ico" HorizontalAlignment="Right" VerticalAlignment="Top" />
         <Label Content="Unit Buy Offer Price:" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" />

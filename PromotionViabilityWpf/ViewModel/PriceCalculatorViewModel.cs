@@ -85,7 +85,8 @@ namespace PromotionViabilityWpf.ViewModel
                     availableItems.AddRange(service.All);
                 });
 
-            Items = availableItems.CreateDerivedCollection(i => i, i => i.Item != null);
+            Items = availableItems.CreateDerivedCollection(i => i, i => i.Item != null, 
+                (a, b) => String.Compare(a.Item.Name, b.Item.Name, StringComparison.Ordinal));
 
             this.WhenAnyValue(x => x.SelectedItem)
                 .Where(i => i != null)
