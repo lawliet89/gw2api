@@ -13,8 +13,12 @@ namespace gw2api.Model
     public class Promotion : ReactiveObject,
         IBundlelable<int, Item>, 
         IBundlelable<int, AggregateListing>,
-        IBundleableRenderable<Item>
+        IBundleableRenderable<Item>,
+        IHasIdentifier<int>
     {
+
+        public static readonly IObjectRepository<int, Promotion> Repository = new ObjectRepository<int, Promotion>();
+
         public ItemBundledEntity Promoted { get; private set; }
         public Yield QuantityYield { get; private set; }
 
@@ -22,7 +26,23 @@ namespace gw2api.Model
         public List<int> IngredientsQuantity { get; private set; }
         public ReactiveList<ItemBundledEntity> IngredientsEntities { get; private set; }
 
-        public Promotion(ItemBundledEntity promoted, Dictionary<ItemBundledEntity, int> ingredients, Yield quantityYield)
+        public static Promotion Get(int id)
+        {
+            return Repository.GetItem(id);
+        }
+
+        public static Promotion Get(ItemBundledEntity promoted)
+        {
+            return Get(promoted.Identifier);
+        }
+
+        public static Promotion GetOrCreate(ItemBundledEntity promoted, Dictionary<ItemBundledEntity, int> ingredients,
+            Yield quantityYield)
+        {
+            return Repository.GetOrAddItem(promoted.Identifier, _ => new Promotion(promoted, ingredients, quantityYield));
+        }
+
+        private Promotion(ItemBundledEntity promoted, Dictionary<ItemBundledEntity, int> ingredients, Yield quantityYield)
         {
             Promoted = promoted;
             QuantityYield = quantityYield;
@@ -125,8 +145,8 @@ namespace gw2api.Model
 
         private void checkPopulated()
         {
-            Populated = Promoted.IconPng != null && Promoted.IconPng.Length > 0
-                        && Items.All(i => i.Listings != null && i.Item != null);
+            Populated = Items.All(i => i.IconPng != null && i.IconPng.Length > 0 
+                && i.Listings != null && i.Item != null);
         }
 
 
@@ -152,7 +172,7 @@ namespace gw2api.Model
 
         public IEnumerable<IBundleableRenderableEntity<Item>> Renderables
         {
-            get { return Promoted.Yield(); }
+            get { return Items; }
         }
 
         private bool populated; 
@@ -160,6 +180,13 @@ namespace gw2api.Model
         {
             get { return populated; }
             set { this.RaiseAndSetIfChanged(ref populated, value); }
+        }
+
+        // For now, we are going to simplify things and make the Promoted Item be the Promotion model ID
+        // We might want to support multiple recipes for the same Promoted item in the future
+        public int Identifier
+        {
+            get { return Promoted.Identifier; }
         }
     }
 }

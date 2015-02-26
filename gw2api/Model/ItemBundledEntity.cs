@@ -11,7 +11,15 @@ namespace gw2api.Model
         IBundledEntity<int, AggregateListing>,
         IBundleableRenderableEntity<Item>
     {
-        public ItemBundledEntity(int id)
+        public static readonly IObjectRepository<int, ItemBundledEntity> Repository =
+            new ObjectRepository<int, ItemBundledEntity>(); 
+
+        public static ItemBundledEntity CreateOrGet(int id)
+        {
+            return Repository.GetOrAddItem(id, identifier => new ItemBundledEntity(identifier));
+        }
+
+        private ItemBundledEntity(int id)
         {
             Identifier = id;
 
@@ -86,5 +94,10 @@ namespace gw2api.Model
             set { IconPng = value; }
         }
         #endregion
+
+        public override string ToString()
+        {
+            return Item.Name;
+        }
     }
 }

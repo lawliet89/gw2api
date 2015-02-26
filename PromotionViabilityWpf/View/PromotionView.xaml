@@ -16,7 +16,7 @@
                Source="/PromotionViabilityWpf;component/icon.ico" />
         <Label Content="Quantity Yield:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"
                Target="{x:Reference QuantityYield}" />
-        <controls:NumericUpDown x:Name="QuantityYield" Margin="196,52,10,270" />
+        <controls:NumericUpDown x:Name="QuantityYield" Margin="196,52,10,270" Minimum="0" />
         <Label Content="Sales Revenue" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" />
         <TextBlock x:Name="ProfitOfProduct" TextWrapping="Wrap" Margin="0,89,10,243"
                    Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}" Text="0g 0s 0c"

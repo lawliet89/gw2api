@@ -40,5 +40,10 @@ namespace PromotionViabilityWpf
                 Debugger.Break();
             }
         }
+
+        private void ShowCalculator(object sender, RoutedEventArgs e)
+        {
+            CalculatorFlyout.IsOpen = !CalculatorFlyout.IsOpen;
+        }
     }
 }
