@@ -16,7 +16,7 @@
     </UserControl.Resources>
     <Grid Width="300">
         <ComboBox x:Name="ItemComboBox" HorizontalAlignment="Left" Height="32" Margin="10,14,0,0"
-			VerticalAlignment="Top" Width="216" SelectedIndex="0" DisplayMemberPath="Item.Name" />
+			VerticalAlignment="Top" Width="216" DisplayMemberPath="Item.Name" />
         <Image x:Name="Icon" Margin="0,14,20,0" Width="32" Height="32"
 			Source="/PromotionViabilityWpf;component/icon.ico" HorizontalAlignment="Right" VerticalAlignment="Top" />
         <Label Content="Unit Buy Offer Price:" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" />
