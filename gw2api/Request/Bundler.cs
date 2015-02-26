@@ -36,6 +36,7 @@ namespace gw2api.Request
             });
         }
 
+        // TODO: Make icon loading happen in parallel, with some throttling
         public static Task<Dictionary<T, byte[]>> LoadIcon<T>(IEnumerable<IBundleableRenderable<T>> bundleables)
             where T : IRenderable
         {

@@ -6,11 +6,9 @@ using gw2api.Object;
 using GW2NET.Commerce;
 using GW2NET.Items;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using PromotionViabilityWpf.Data;
 using ReactiveUI;
 
-namespace PromotionViabilityWpf.Model
+namespace gw2api.Model
 {
     [JsonConverter(typeof(ItemEntityConverter))]
     [TypeConverter(typeof(ItemStringConverter))]
@@ -19,7 +17,15 @@ namespace PromotionViabilityWpf.Model
         IBundledEntity<int, AggregateListing>,
         IBundleableRenderableEntity<Item>
     {
-        public ItemBundledEntity(int id)
+        public static readonly IObjectRepository<int, ItemBundledEntity> Repository =
+            new ObjectRepository<int, ItemBundledEntity>(); 
+
+        public static ItemBundledEntity CreateOrGet(int id)
+        {
+            return Repository.GetOrAddItem(id, identifier => new ItemBundledEntity(identifier));
+        }
+
+        private ItemBundledEntity(int id)
         {
             Identifier = id;
 
@@ -98,6 +104,11 @@ namespace PromotionViabilityWpf.Model
             set { IconPng = value; }
         }
         #endregion
+
+        public override string ToString()
+        {
+            return Item.Name;
+        }
     }
 
     public class ItemEntityConverter : JsonConverter
@@ -117,7 +128,7 @@ namespace PromotionViabilityWpf.Model
                 throw new JsonSerializationException("Item reference must be a string");
 
             var id = (int) ItemIdsContext.GetLinkedValue(serializer, typeof (int), reader.Value.ToString());
-            return new ItemBundledEntity(id);
+            return ItemBundledEntity.CreateOrGet(id);
         }
 
         public override bool CanConvert(Type objectType)

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows;
+using gw2api.Object;
 using Newtonsoft.Json;
 using PromotionViabilityWpf.Data;
 using PromotionViabilityWpf.ViewModel;
@@ -57,6 +58,11 @@ namespace PromotionViabilityWpf
             {
                 Debugger.Break();
             }
+        }
+
+        private void ShowCalculator(object sender, RoutedEventArgs e)
+        {
+            CalculatorFlyout.IsOpen = !CalculatorFlyout.IsOpen;
         }
     }
 }
