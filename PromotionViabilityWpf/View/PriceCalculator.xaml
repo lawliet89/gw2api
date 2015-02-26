@@ -24,7 +24,7 @@
         <Label x:Name="UnitBuyOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,51,10,0" VerticalAlignment="Top"/>
         <Label x:Name="UnitSellOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,82,10,0" VerticalAlignment="Top"/>
         <Label Content="Quantity:" HorizontalAlignment="Left" Margin="10,113,0,0" VerticalAlignment="Top" Target="{Binding ElementName=Quantity, Mode=OneWay}" />
-        <controls:NumericUpDown x:Name="Quantity" Margin="0,113,10,0" Minimum="0" HorizontalAlignment="Right" VerticalAlignment="Top" />
+        <controls:NumericUpDown x:Name="Quantity" Margin="0,113,10,0" Minimum="0" HorizontalAlignment="Right" VerticalAlignment="Top" Maximum="9999" />
         <Label Content="Total Buy Order Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,144,0,0"/>
         <Label Content="Total Sell Order Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,175,0,0"/>
         <Label x:Name="BuyOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,144,10,0" VerticalAlignment="Top"/>
