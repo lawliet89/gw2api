@@ -62,6 +62,20 @@ namespace PromotionViabilityWpf.ViewModel
             get { return buyOfferPrice.Value; }
         }
 
+        private readonly ObservableAsPropertyHelper<Coin> sellOfferPriceTaxed;
+
+        public Coin SellOfferPriceTaxed
+        {
+            get { return sellOfferPriceTaxed.Value; }
+        }
+
+        private readonly ObservableAsPropertyHelper<Coin> buyOfferPriceTaxed;
+
+        public Coin BuyOfferPriceTaxed
+        {
+            get { return buyOfferPriceTaxed.Value; }
+        }
+
         public PriceCalculatorViewModel()
         {
             var service = Locator.Current.GetService<IObjectRepository<int, ItemBundledEntity>>();
@@ -116,6 +130,14 @@ namespace PromotionViabilityWpf.ViewModel
                 this.WhenAnyValue(x => x.UnitBuyOfferPrice).Select(_ => UnitBuyOfferPrice*Quantity),
                 this.WhenAnyValue(x => x.Quantity).Select(_ => UnitBuyOfferPrice*Quantity),
             }).ToProperty(this, x => x.BuyOfferPrice, out buyOfferPrice, 0);
+
+            this.WhenAnyValue(x => x.SellOfferPrice)
+                .Select(Coin.ProfitSellingAt)
+                .ToProperty(this, x => x.SellOfferPriceTaxed, out sellOfferPriceTaxed);
+
+            this.WhenAnyValue(x => x.BuyOfferPrice)
+                .Select(Coin.ProfitSellingAt)
+                .ToProperty(this, x => x.BuyOfferPriceTaxed, out buyOfferPriceTaxed);
         }
     }
 }
