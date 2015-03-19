@@ -29,7 +29,8 @@ namespace PromotionViabilityWpf.View
             this.OneWayBind(ViewModel, vm => vm.RevenueOfProduct, x => x.ProfitOfProduct.Text);
 
             this.OneWayBind(ViewModel, vm => vm.Ingredients, x => x.Ingredients.ItemsSource);
-            this.OneWayBind(ViewModel, vm => vm.Cost, x => x.IngredientsCost.Text);
+            this.OneWayBind(ViewModel, vm => vm.IngredientsCost, x => x.IngredientsCost.Text);
+            this.OneWayBind(ViewModel, vm => vm.IngredientsValue, x => x.IngredientsValue.Text);
 
             this.OneWayBind(ViewModel, vm => vm.Profit, x => x.Profit.Text);
 

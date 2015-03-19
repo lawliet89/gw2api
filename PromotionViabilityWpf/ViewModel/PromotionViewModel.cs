@@ -27,7 +27,7 @@ namespace PromotionViabilityWpf.ViewModel
                 new ReactiveList<IngredientViewModel>(
                     Promotion.Ingredients.Select(pair => new IngredientViewModel(pair.Key, pair.Value))) { ChangeTrackingEnabled = true };
 
-            Cost = 0;
+            IngredientsCost = 0;
             var ingredientsObservables = new[]
             {
                 Ingredients.ItemChanged.Select(_ => Unit.Default),
@@ -35,7 +35,11 @@ namespace PromotionViabilityWpf.ViewModel
             };
             Observable.Merge(ingredientsObservables)
                 .Where(_ => Promotion.Populated)
-                .Subscribe(_ => Cost = promotion.CostOfIngredients(ingredientsList));
+                .Subscribe(_ => IngredientsCost = promotion.CostOfIngredients(ingredientsList));
+
+            Observable.Merge(ingredientsObservables)
+                .Where(_ => Promotion.Populated)
+                .Subscribe(_ => IngredientsValue = promotion.ValueOfIngredients(ingredientsList));
 
             this.WhenAnyValue(x => x.Promotion.Promoted.MinSaleUnitPrice)
                 .ToProperty(this, x => x.PromotedMinUnitSalePrice, out promotedMinUnitSalePrice, 0);
@@ -50,10 +54,10 @@ namespace PromotionViabilityWpf.ViewModel
 
             Observable.Merge(new[]
             {
-                this.WhenAnyValue(x => x.Cost),
+                this.WhenAnyValue(x => x.IngredientsCost),
                 this.WhenAnyValue(x => x.RevenueOfProduct)
             })
-                .Select(_ => RevenueOfProduct - Cost)
+                .Select(_ => RevenueOfProduct - IngredientsCost)
                 .ToProperty(this, x => x.Profit, out profit, 0);
         }
 
@@ -77,12 +81,20 @@ namespace PromotionViabilityWpf.ViewModel
             get { return revenueOfProduct.Value; }
         }
 
-        private Coin cost;
+        private Coin ingredientsCost;
 
-        public Coin Cost
+        public Coin IngredientsCost
         {
-            get { return cost; }
-            private set { this.RaiseAndSetIfChanged(ref cost, value); }
+            get { return ingredientsCost; }
+            private set { this.RaiseAndSetIfChanged(ref ingredientsCost, value); }
+        }
+
+        private Coin ingredientsValue;
+
+        public Coin IngredientsValue
+        {
+            get {  return ingredientsValue; }
+            private set { this.RaiseAndSetIfChanged(ref ingredientsValue, value); }
         }
 
         private readonly ObservableAsPropertyHelper<bool> populated;

@@ -143,6 +143,27 @@ namespace gw2api.Model
             return CostOfIngredients(ingredients.ToDictionary(pair => pair.Key.Identifier, pair => pair.Value));
         }
 
+        public Coin ValueOfIngredients(Dictionary<ItemBundledEntity, int> ingredients)
+        {
+            return ValueOfIngredients(ingredients.ToDictionary(pair => pair.Key.Identifier, pair => pair.Value));
+        }
+
+        private Coin ValueOfIngredients(Dictionary<int, int> ingredients)
+        {
+            var totalValue = new Coin(0);
+            foreach (var ingredient in IngredientsEntities)
+            {
+                var quantity = 0;
+                var availableIngredient = ingredients.FirstOrDefault(i => i.Key == ingredient.Identifier);
+                if (!availableIngredient.IsDefault())
+                {
+                    quantity = availableIngredient.Value;
+                }
+                totalValue += quantity * ingredient.MinSaleUnitPrice;
+            }
+            return totalValue;
+        }
+
         private void checkPopulated()
         {
             Populated = Items.All(i => i.IconPng != null && i.IconPng.Length > 0 
