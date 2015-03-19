@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Reactive.Linq;
-using System.Windows.Media.Imaging;
 using gw2api.Model;
 using gw2api.Object;
-using PromotionViabilityWpf.Extensions;
 using ReactiveUI;
 using Splat;
 
