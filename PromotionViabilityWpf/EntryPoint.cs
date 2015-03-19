@@ -24,6 +24,7 @@ namespace PromotionViabilityWpf
             Locator.CurrentMutable.RegisterConstant(GW2.Rendering.RenderService, typeof(IRenderService));
 
             Locator.CurrentMutable.Register(() => new PromotionView(), typeof(IViewFor<PromotionViewModel>));
+            Locator.CurrentMutable.Register(() => new PriceCalculatorItemView(), typeof(IViewFor<PriceCalculatorItemViewModel>));
 
             Locator.CurrentMutable.RegisterConstant(new IntegerToNullableDouble(), typeof(IBindingTypeConverter));
             Locator.CurrentMutable.RegisterConstant(new DebugLogger(), typeof(ILogger));

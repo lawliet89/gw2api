@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="PromotionViabilityWpf.View.PriceCalculatorItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="325" d:DesignWidth="300">
+    <Expander x:Name="Expander" Header="Item Name" VerticalAlignment="Top">
+        <Grid>
+            <Image x:Name="Icon" Margin="0,227,10,0" Width="32" Height="32"
+			Source="/PromotionViabilityWpf;component/icon.ico" HorizontalAlignment="Right" VerticalAlignment="Top" />
+            <Label Content="Quantity:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Target="{Binding ElementName=Quantity, Mode=OneWay}" />
+            <controls:NumericUpDown x:Name="Quantity" Margin="0,10,10,0" Minimum="0" HorizontalAlignment="Right" VerticalAlignment="Top" Maximum="9999" />
+            <Label Content="Unit Buy Offer Price:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" />
+            <Label Content="Unit Sell Offer Price:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" />
+            <Label x:Name="UnitBuyOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,41,10,0" VerticalAlignment="Top"/>
+            <Label x:Name="UnitSellOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,72,10,0" VerticalAlignment="Top"/>
+            <Label Content="Total Buy Order Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,103,0,0"/>
+            <Label Content="Total Sell Order Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,165,0,0"/>
+            <Label x:Name="BuyOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,103,10,0" VerticalAlignment="Top"/>
+            <Label x:Name="SellOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,165,10,0" VerticalAlignment="Top"/>
+            <Label Content="&#x9;After Tax" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,134,0,0"/>
+            <Label Content="&#x9;After Tax" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,196,0,0"/>
+            <Label x:Name="BuyOfferPriceTaxed" Content="0c" HorizontalAlignment="Right" Margin="0,134,10,0" VerticalAlignment="Top"/>
+            <Label x:Name="SellOfferPriceTaxed" Content="0c" HorizontalAlignment="Right" Margin="0,196,10,0" VerticalAlignment="Top"/>
+        </Grid>
+    </Expander>
+</UserControl>
