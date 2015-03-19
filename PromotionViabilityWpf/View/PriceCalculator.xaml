@@ -17,24 +17,24 @@
     <Grid Width="300">
         <controls:SplitButton x:Name="ItemComboBox" HorizontalAlignment="Left" Height="32" Margin="10,14,0,0"
 			VerticalAlignment="Top" Width="216" DisplayMemberPath="Item.Name" VerticalContentAlignment="Center" Padding="5,0,0,0" SelectedIndex="-1" />
-        <Image x:Name="Icon" Margin="0,14,20,0" Width="32" Height="32"
-			Source="/PromotionViabilityWpf;component/icon.ico" HorizontalAlignment="Right" VerticalAlignment="Top" />
-        <Label Content="Quantity:" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Target="{Binding ElementName=Quantity, Mode=OneWay}" />
-        <controls:NumericUpDown x:Name="Quantity" Margin="0,51,10,0" Minimum="0" HorizontalAlignment="Right" VerticalAlignment="Top" Maximum="9999" />
-        <Expander Header="Test" Margin="10,82,10,0" VerticalAlignment="Top">
+        <Expander x:Name="Expander" Header="Test" Margin="10,51,10,0" VerticalAlignment="Top" Height="302">
             <Grid>
-                <Label Content="Unit Buy Offer Price:" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" />
-                <Label Content="Unit Sell Offer Price:" HorizontalAlignment="Left" Margin="10,33,0,0" VerticalAlignment="Top" />
-                <Label x:Name="UnitBuyOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,2,10,0" VerticalAlignment="Top"/>
-                <Label x:Name="UnitSellOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,33,10,0" VerticalAlignment="Top"/>
-                <Label Content="Total Buy Order Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,64,0,0"/>
-                <Label Content="Total Sell Order Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,126,0,0"/>
-                <Label x:Name="BuyOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,64,10,0" VerticalAlignment="Top"/>
-                <Label x:Name="SellOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,126,10,0" VerticalAlignment="Top"/>
-                <Label Content="&#x9;After Tax" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,95,0,0"/>
-                <Label Content="&#x9;After Tax" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,157,0,0"/>
-                <Label x:Name="BuyOfferPriceTaxed" Content="0c" HorizontalAlignment="Right" Margin="0,95,10,0" VerticalAlignment="Top"/>
-                <Label x:Name="SellOfferPriceTaxed" Content="0c" HorizontalAlignment="Right" Margin="0,157,10,0" VerticalAlignment="Top"/>
+                <Image x:Name="Icon" Margin="0,227,10,0" Width="32" Height="32"
+			Source="/PromotionViabilityWpf;component/icon.ico" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                <Label Content="Quantity:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Target="{Binding ElementName=Quantity, Mode=OneWay}" />
+                <controls:NumericUpDown x:Name="Quantity" Margin="0,10,10,0" Minimum="0" HorizontalAlignment="Right" VerticalAlignment="Top" Maximum="9999" />
+                <Label Content="Unit Buy Offer Price:" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" />
+                <Label Content="Unit Sell Offer Price:" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" />
+                <Label x:Name="UnitBuyOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,41,10,0" VerticalAlignment="Top"/>
+                <Label x:Name="UnitSellOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,72,10,0" VerticalAlignment="Top"/>
+                <Label Content="Total Buy Order Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,103,0,0"/>
+                <Label Content="Total Sell Order Price:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,165,0,0"/>
+                <Label x:Name="BuyOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,103,10,0" VerticalAlignment="Top"/>
+                <Label x:Name="SellOfferPrice" Content="0c" HorizontalAlignment="Right" Margin="0,165,10,0" VerticalAlignment="Top"/>
+                <Label Content="&#x9;After Tax" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,134,0,0"/>
+                <Label Content="&#x9;After Tax" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,196,0,0"/>
+                <Label x:Name="BuyOfferPriceTaxed" Content="0c" HorizontalAlignment="Right" Margin="0,134,10,0" VerticalAlignment="Top"/>
+                <Label x:Name="SellOfferPriceTaxed" Content="0c" HorizontalAlignment="Right" Margin="0,196,10,0" VerticalAlignment="Top"/>
             </Grid>
         </Expander>
 

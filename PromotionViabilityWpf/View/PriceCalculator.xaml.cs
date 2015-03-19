@@ -24,6 +24,7 @@ namespace PromotionViabilityWpf.View
             this.OneWayBind(ViewModel, vm => vm.SellOfferPrice, x => x.SellOfferPrice.Content);
             this.OneWayBind(ViewModel, vm => vm.BuyOfferPriceTaxed, x => x.BuyOfferPriceTaxed.Content);
             this.OneWayBind(ViewModel, vm => vm.SellOfferPriceTaxed, x => x.SellOfferPriceTaxed.Content);
+            this.OneWayBind(ViewModel, vm => vm.SelectedItem.Item.Name, x => x.Expander.Header);
         }
 
         object IViewFor.ViewModel
